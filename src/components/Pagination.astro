@@ -15,29 +15,29 @@ const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
       {prevUrl ? (
         <a
           href={prevUrl}
-          class="border border-[var(--color-border)] px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          class="border border-border px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors hover:border-accent hover:text-accent"
         >
           &larr; Precedente
         </a>
       ) : (
-        <span class="border border-transparent px-4 py-2 text-xs uppercase tracking-wider text-[var(--color-text-secondary)] opacity-40">
+        <span class="border border-transparent px-4 py-2 text-xs uppercase tracking-wider text-text-secondary opacity-40">
           &larr; Precedente
         </span>
       )}
 
-      <span class="font-display text-sm text-[var(--color-text-secondary)]">
+      <span class="font-display text-sm text-text-secondary" aria-current="page">
         {currentPage} / {lastPage}
       </span>
 
       {nextUrl ? (
         <a
           href={nextUrl}
-          class="border border-[var(--color-border)] px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          class="border border-border px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors hover:border-accent hover:text-accent"
         >
           Successiva &rarr;
         </a>
       ) : (
-        <span class="border border-transparent px-4 py-2 text-xs uppercase tracking-wider text-[var(--color-text-secondary)] opacity-40">
+        <span class="border border-transparent px-4 py-2 text-xs uppercase tracking-wider text-text-secondary opacity-40">
           Successiva &rarr;
         </span>
       )}

@@ -26,7 +26,7 @@ const { posts } = Astro.props;
     class="font-display text-3xl font-black tracking-tight sm:text-4xl"
     style="font-variation-settings: 'opsz' 48, 'WONK' 1;"
   >
-    Tag: <span class="text-[var(--color-accent)]">{tag}</span>
+    Tag: <span class="text-accent">{tag}</span>
   </h1>
 
   <div class="stagger-children mt-8 space-y-0">
@@ -44,12 +44,12 @@ const { posts } = Astro.props;
   </div>
 
   {posts.length === 0 && (
-    <p class="mt-8 text-[var(--color-text-secondary)]">Nessun articolo con questo tag.</p>
+    <p class="mt-8 text-text-secondary">Nessun articolo con questo tag.</p>
   )}
 
   <a
     href="/blog"
-    class="mt-8 inline-block text-xs font-medium uppercase tracking-widest text-[var(--color-accent)] transition-colors hover:text-[var(--color-accent-hover)]"
+    class="mt-8 inline-block text-xs font-medium uppercase tracking-widest text-accent transition-colors hover:text-accent-hover"
   >
     &larr; Tutti gli articoli
   </a>

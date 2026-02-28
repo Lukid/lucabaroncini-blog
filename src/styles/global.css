@@ -114,6 +114,8 @@ body::before {
 
   max-width: 65ch;
   line-height: 1.75;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Headings — Fraunces display with wonky optical sizing */
@@ -205,7 +207,7 @@ body::before {
   border: 1px solid var(--color-border);
   padding: 1rem 1.25rem;
   overflow-x: auto;
-  margin: 1.5rem -1rem;
+  margin: 1.5rem calc(-1rem + 1px);
   position: relative;
 }
 
@@ -218,9 +220,9 @@ body::before {
 
 /* Images — bleed out */
 .prose img {
-  margin: 1.5rem -1rem;
-  max-width: calc(100% + 2rem);
-  width: calc(100% + 2rem);
+  margin: 1.5rem calc(-1rem + 1px);
+  max-width: calc(100% + 2rem - 2px);
+  width: calc(100% + 2rem - 2px);
 }
 
 /* === Dropcap === */
@@ -293,10 +295,21 @@ body::before {
 .stagger-children.is-visible > *:nth-child(10) { transition-delay: 720ms; }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .fade-in-observed,
   .stagger-children > * {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* Copy button: always visible on touch devices */
+@media (hover: none) {
+  .copy-btn {
+    opacity: 1;
   }
 }

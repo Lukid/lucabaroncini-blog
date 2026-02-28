@@ -1,0 +1,75 @@
+<div id="lightbox-overlay" class="lightbox-overlay" aria-hidden="true" role="dialog" aria-label="Immagine ingrandita" tabindex="-1">
+  <img id="lightbox-img" class="lightbox-img" alt="" />
+</div>
+
+<style>
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: oklch(0% 0 0 / 85%);
+    cursor: zoom-out;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .lightbox-overlay[data-active] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 0.25rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox-overlay {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function initLightbox() {
+    var overlay = document.getElementById("lightbox-overlay");
+    var lightboxImg = document.getElementById("lightbox-img");
+    var triggerEl = null;
+
+    function setup() {
+      document.querySelectorAll(".prose img, .lightbox-target").forEach(function (img) {
+        if (img.dataset.lightbox) return;
+        img.dataset.lightbox = "true";
+        img.style.cursor = "zoom-in";
+        img.addEventListener("click", function () {
+          triggerEl = img;
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt || "";
+          overlay.setAttribute("data-active", "");
+          overlay.setAttribute("aria-hidden", "false");
+          overlay.focus();
+        });
+      });
+    }
+
+    function close() {
+      overlay.removeAttribute("data-active");
+      overlay.setAttribute("aria-hidden", "true");
+      if (triggerEl) { triggerEl.focus(); triggerEl = null; }
+    }
+
+    overlay.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && overlay.hasAttribute("data-active")) close();
+    });
+
+    setup();
+    document.addEventListener("astro:after-swap", setup);
+  })();
+</script>

@@ -20,21 +20,21 @@ const formattedDate = pubDate.toLocaleDateString(SITE.locale, {
 });
 ---
 
-<article class="group border-b border-[var(--color-border)] pb-8">
+<article class="group border-b border-border pb-8">
   <a href={`/blog/${slug}`} class="block">
     <time
       datetime={pubDate.toISOString()}
-      class="text-xs font-medium uppercase tracking-widest text-[var(--color-text-secondary)]"
+      class="text-xs font-medium uppercase tracking-widest text-text-secondary"
     >
       {formattedDate}
     </time>
     <h3
-      class="mt-2 font-display text-xl font-bold tracking-tight transition-colors group-hover:text-[var(--color-accent)] sm:text-2xl"
+      class="mt-2 font-display text-xl font-bold tracking-tight transition-colors group-hover:text-accent sm:text-2xl"
       style="font-variation-settings: 'opsz' 28, 'WONK' 1;"
     >
       {title}
     </h3>
-    <p class="mt-2 text-[var(--color-text-secondary)]">{description}</p>
+    <p class="mt-2 line-clamp-3 text-text-secondary">{description}</p>
   </a>
   {
     tags.length > 0 && (

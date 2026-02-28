@@ -5,7 +5,7 @@
 <button
   type="button"
   aria-label="Cambia tema"
-  class="theme-toggle p-2 transition-colors hover:bg-[var(--color-bg-secondary)]"
+  class="theme-toggle p-2 transition-colors hover:bg-bg-secondary"
 >
   <svg
     class="sun-icon hidden h-5 w-5"
@@ -44,7 +44,7 @@
 
   function toggleTheme() {
     const isDark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    try { localStorage.setItem("theme", isDark ? "dark" : "light"); } catch {}
     updateThemeIcons();
   }
 

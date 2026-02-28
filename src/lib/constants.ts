@@ -18,12 +18,12 @@ export const NAV_ITEMS = [
 export const SOCIAL_LINKS = [
   {
     label: "GitHub",
-    href: "https://github.com/lucabaroncini",
+    href: "https://github.com/Lukid/",
     icon: "github",
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/lucabaroncini",
+    href: "https://www.linkedin.com/in/luca-baroncini-b4b1a1b6/",
     icon: "linkedin",
   },
 ] as const;

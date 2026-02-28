@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import lucaPhoto from "@/assets/luca-baroncini.jpg";
 ---
 
 <BaseLayout title="Chi sono" description="Informazioni su Luca Baroncini: sviluppatore, appassionato di politica e arrampicatore.">
@@ -11,14 +13,21 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       Chi sono
     </h1>
 
+    <Image
+      src={lucaPhoto}
+      alt="Luca Baroncini"
+      width={320}
+      class="mt-6 rounded-lg"
+    />
+
     <div class="prose mt-6">
       <p>
         Sono Luca Baroncini. Mi occupo di tecnologia e sviluppo web, seguo la politica
         e nel tempo libero mi trovi in falesia ad arrampicare.
       </p>
       <p>
-        Questo blog è il mio spazio per condividere pensieri, appunti tecnici e storie
-        dalla roccia. Niente tracking, niente cookie, niente complessità inutile.
+        Questo blog è il mio spazio per condividere pensieri, appunti tecnici e storie. 
+        Niente tracking, niente cookie, niente complessità inutile.
       </p>
       <p>
         Il sito è costruito con <a href="https://astro.build">Astro</a>,

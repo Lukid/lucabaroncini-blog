@@ -1,0 +1,122 @@
+---
+title: "Come ho costruito questo blog"
+description: "O di quel pomeriggio in cui ho scritto un messaggio a Claude Code dopo aver letto un articolo di Sid Bharath."
+pubDate: 2026-02-28
+tags: [personal, tech, astro, web]
+---
+
+import { Image } from "astro:assets";
+import Callout from "@/components/mdx/Callout.astro";
+import blogV1 from "@/assets/blog-v1-chi-sono.png";
+
+Era un sabato pomeriggio e avevo il terminale aperto. Nessun piano preciso, nessuna deadline. 
+Noia e smania, quella smania ossessiva che da quando ho preso il via con Claude Code non riesco più a pensare ad altro..
+
+Se state in fissa con il vibe coding, che ora si chiama "Agentic engineering", mi capite bene, 
+stai ore in fissa a pensare a cosa potresti fare di davvero incredibile..
+
+Ho aperto claude code, ho messo il plan mode, ho scritto un prompt e ho premuto enter. 
+
+
+## L'idea
+
+Volevo uno spazio mio. Non un Medium dove sei ospite, non un CMS da mantenere, non un profilo social che vive e muore secondo l'algoritmo di qualcun altro. 
+Un sito statico, veloce, che facesse una cosa sola e la facesse bene: pubblicare quello che scrivo.
+
+L'ispirazione (l'idea non è mia) è arrivata leggendo un articolo di Sid Bharath su come aveva costruito il suo sito. 
+
+Lo stack: [Astro](https://astro.build) per il framework, [MDX](https://mdxjs.com) per i contenuti, [Tailwind CSS](https://tailwindcss.com) per lo stile, 
+[Cloudflare Pages](https://pages.cloudflare.com) per il deploy. Tutto statico, tutto leggero e gratis.
+
+Il primo prompt che ho scritto a Claude Code (da qui in avanti Claudio) era più o meno così:
+
+> "Vorrei farmi un blog personale dove parlo di tecnologia e forse di politica o forse di arrampicata, chi lo sa. Insomma una cosa mia che mi rappresenti..."
+
+<Callout type="tip">
+Meglio scrivere prima un PRD (Product Requirements Document), darlo in pasto a un agente come Ralph che lo esegue fase per fase, 
+e gestire il progetto in modo più sistematico. 
+Quando butti tutto in un prompt unico e lasci andare, il contesto si riempie velocemente e degrada (context rot) 
+e Claudio inizia a dimenticarsi decisioni prese tre minuti prima. Un PRD ti dà checkpoint, ti permette di riprendere da dove eri rimasto, 
+ma soprattutto ti costringe a pensare prima di scrivere.
+</Callout>
+
+## Undici minuti
+
+Claude Code ha letto il mio messaggio, ha prodotto un piano in 30 fasi e ha iniziato a eseguirle una per una. 
+Componenti Astro, layout, pagine, stili globali, feed RSS, dark mode, configurazione TypeScript. 
+**37 file in circa undici minuti.**
+
+Le righe scorrono, i file appaiono uno dopo l'altro, e tu stai lì a osservare qualcosa che normalmente ti avrebbe portato via un'eternità. 
+
+Alla fine ho messo su una repo su Github. Un collegamento su Cloudflare Pages. Il sito era online.
+
+## Non mi somiglia
+
+Il blog funzionava. Era veloce, corretto, ben strutturato.
+Ma quando l'ho aperto nel browser e l'ho guardato, niente: **non mi somigliava**.
+
+<Image src={blogV1} alt="La prima versione del blog — pagina Chi sono, design generico e scarno" />
+
+Era un blog generico. Pulito, certo. Professionale, forse. Ma Era veramente scarno. Zero personalità, non aveva voce visiva. 
+Mancava qualcosa di fondamentale, forse perché ero partito un po' a caso, generico e senza contesto.
+
+Qui l'idea, dettata da una pigrizia inaffondabile.S
+ono andato sulla versione di Claudio che non fa codice, ho chiesto: 
+"per quello che mi conosci, volessi farmi un blog, che stile dovrei usare a livello di frontend design ?"
+
+Ora, io e Claudio passiamo diverso tempo insieme, ma non finisce mai di sorprendermi.
+Eccola (taglio, ma il succo è questo):
+
+> Sei una persona che vive a cavallo tra mondi: tecnico ma non puro developer, PM ma non solo organizzatore, appassionato di AI ma con una forte vena narrativa e umanistica. Il tuo blog non è un portfolio da developer né un blog corporate da PM. È il posto dove una persona curiosa condivide il modo in cui vede le cose.
+>
+> Direi editoriale/magazine con un tocco di strano — pensalo come se Il Manifesto si fosse innamorato di Wired Italia degli anni '90 e avessero fatto un figlio nel 2024.
+>
+> Pensa al tuo blog come a un taccuino di un artigiano curioso — qualcuno che lavora con strumenti moderni ma che ha ancora rispetto per la carta, per la narrativa, per le idee fatte bene. Non vuoi sembrare una startup, non vuoi sembrare un accademico, non vuoi sembrare un influencer tech. Vuoi sembrare te. *Editorial caldo con nervi tecnici nascosti.*
+.
+
+Bene riapro Claudio codice e gli dico:
+"Ferma ho avuto un'idea geniale: Voglio uno stile come se il Manifesto si fosse innamorato di Wired Italia negli anni 90 e avesse fatto un figlio nel 2024. 
+Tipografia protagonista... etc"
+
+Claudio è partito. Ha scelto [Fraunces](https://fonts.google.com/specimen/Fraunces) per i titoli. [Literata](https://fonts.google.com/specimen/Literata) per il corpo del testo, 
+progettato per la lettura lunga. 
+Una palette costruita in OKLCH, una texture noise di sfondo che dà matericità allo schermo. Dropcap tipografico sul primo paragrafo.
+
+Ah, avevo installato delle skill per il frontend design, probabilmente si è mosso bene anche per quello.
+
+<Callout type="info">
+Claude Code ha un comando `/find-skills` che ti permette di cercare e installare skill di terze parti. 
+Prima del redesign ne ho installata una specializzata in frontend design — in pratica istruzioni e pattern che Claudio segue quando deve prendere decisioni visive. 
+Il risultato si vede: font variabili con `font-variation-settings`, palette in OKLCH, texture SVG, dropcap tipografico, dark mode con identità cromatica propria. 
+Senza quella skill probabilmente sarebbe uscito un altro template generico.
+</Callout>
+
+
+## Lo strumento e la mano
+
+Non voglio fare il dibattito filosofico sull'intelligenza artificiale. Ce ne sono già abbastanza. 
+Voglio solo raccontare un caso d'uso, in questa epoca dove tutti stanno in cerca di casi d'uso.
+
+**Cosa ha funzionato:** la velocità , la consistenza del codice prodotto, l'eliminazione di tutto il boilerplate che normalmente ti rallenta. 
+Non ho dovuto cercare su Stack Overflow come configurare il feed RSS in Astro 5 o come far funzionare il dark mode con Tailwind v4. 
+
+
+**Cosa ha richiesto l'umano:** l'avvio, il giudizio, la ricerca su cosa ha senso e cosa no. 
+Fosse stato un progetto serio, avrei dovuto fare una ricerca più approfondita, avrei dovuto cercare di capire cosa volevo davvero prima di partire.
+Questo invece era un esperimento e sono partito senza pensare molto.
+Il risultato è comunque notevole.
+
+
+## ok ma come funziona ?
+
+Funziona che io scrivo file mdx (tipo markdown) pusho in repo e fa una build che cloudflare pages pubblica.
+Il sito è statico, non c'è database, non c'è backend, non c'è niente.
+
+Astro genera HTML puro al momento della build — nel browser non arriva un singolo kilobyte di JavaScript (a parte gli snippet per il dark mode toggle e il copy button).
+E MDX mi permette di usare componenti dentro il testo, tipo i box colorati che vedete in questo post: sono componenti Astro che esistono solo a build time e vengono renderizzati come HTML statico.
+
+
+Ah, dimenticavo che se Marcello non mi avesse mandato un vocale mentre saliva a corsa il [faeta](https://share.google/tVRgsHnoVcqa0qy0Z) (che per lui probabilmente è come fare le scale di casa), 
+forse st'idea non mi sarebbe mai venuta, o comunque probabilmente non mi sarei soffermato granché sull'articolo di Sid Bharath.
+
+E niente, tutto è partito da un sabato pomeriggio di noia e smania. A volte basta quello.

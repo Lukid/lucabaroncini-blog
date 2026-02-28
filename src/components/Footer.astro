@@ -4,20 +4,20 @@ import { SITE, SOCIAL_LINKS } from "@/lib/constants";
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-[var(--color-border)] py-12">
+<footer class="border-t border-border py-12">
   <div class="mx-auto max-w-4xl px-6 sm:px-8">
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-      <p class="font-display text-sm text-[var(--color-text-secondary)]">
+      <p class="font-display text-sm text-text-secondary">
         &copy; {year} {SITE.author}
       </p>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-1">
         {
           SOCIAL_LINKS.map((link) => (
             <a
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text)]"
+              class="p-2 text-text-secondary transition-colors hover:text-text"
               aria-label={link.label}
             >
               {link.icon === "github" && (
@@ -35,7 +35,7 @@ const year = new Date().getFullYear();
         }
         <a
           href="/rss.xml"
-          class="text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text)]"
+          class="p-2 text-text-secondary transition-colors hover:text-text"
           aria-label="Feed RSS"
         >
           <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
