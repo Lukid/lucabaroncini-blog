@@ -1,0 +1,16 @@
+---
+import type { Tag } from "@/lib/constants";
+
+interface Props {
+  tag: Tag;
+}
+
+const { tag } = Astro.props;
+---
+
+<a
+  href={`/tags/${tag}`}
+  class="inline-block border border-[var(--color-border)] px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+>
+  {tag}
+</a>

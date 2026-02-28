@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import { getCollection } from "astro:content";
+import { SITE } from "@/lib/constants";
+import type { GetStaticPathsOptions } from "astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  );
+  return paginate(posts, { pageSize: SITE.postsPerPage });
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout title="Blog" description="Tutti gli articoli del blog di Luca Baroncini.">
+  <h1
+    class="font-display text-3xl font-black tracking-tight sm:text-4xl"
+    style="font-variation-settings: 'opsz' 48, 'WONK' 1;"
+  >
+    Blog
+  </h1>
+
+  <div class="stagger-children mt-8 space-y-0">
+    {
+      page.data.map((post: any) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          tags={post.data.tags}
+          slug={post.id}
+        />
+      ))
+    }
+  </div>
+
+  <Pagination
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+    currentPage={page.currentPage}
+    lastPage={page.lastPage}
+  />
+</BaseLayout>

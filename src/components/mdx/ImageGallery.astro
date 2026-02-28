@@ -1,0 +1,13 @@
+---
+interface Props {
+  columns?: 2 | 3;
+}
+
+const { columns = 2 } = Astro.props;
+
+const gridClass = columns === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-1 sm:grid-cols-2";
+---
+
+<div class:list={["my-6 -mx-4 grid gap-1", gridClass]}>
+  <slot />
+</div>

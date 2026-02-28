@@ -1,0 +1,48 @@
+---
+import TagBadge from "./TagBadge.astro";
+import type { Tag } from "@/lib/constants";
+import { SITE } from "@/lib/constants";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: Tag[];
+  slug: string;
+}
+
+const { title, description, pubDate, tags, slug } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString(SITE.locale, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<article class="group border-b border-[var(--color-border)] pb-8">
+  <a href={`/blog/${slug}`} class="block">
+    <time
+      datetime={pubDate.toISOString()}
+      class="text-xs font-medium uppercase tracking-widest text-[var(--color-text-secondary)]"
+    >
+      {formattedDate}
+    </time>
+    <h3
+      class="mt-2 font-display text-xl font-bold tracking-tight transition-colors group-hover:text-[var(--color-accent)] sm:text-2xl"
+      style="font-variation-settings: 'opsz' 28, 'WONK' 1;"
+    >
+      {title}
+    </h3>
+    <p class="mt-2 text-[var(--color-text-secondary)]">{description}</p>
+  </a>
+  {
+    tags.length > 0 && (
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        {tags.map((tag) => (
+          <TagBadge tag={tag} />
+        ))}
+      </div>
+    )
+  }
+</article>

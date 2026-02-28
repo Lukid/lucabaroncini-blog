@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:sidbharath.com)",
+      "WebFetch(domain:impeccable.style)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:docs.astro.build)",
+      "WebFetch(domain:johndalesandro.com)",
+      "Bash(npm create:*)",
+      "Bash(cp:*)",
+      "Bash(npm install:*)",
+      "Bash(curl -sL \"https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip\" -o /tmp/inter.zip)",
+      "Bash(unzip -o /tmp/inter.zip -d /tmp/inter)",
+      "Bash(~/Sites/lucabaroncini/public/og-default.png:*)",
+      "Bash(python3:*)",
+      "Bash(npm run:*)",
+      "Bash(rm:*)",
+      "Bash(npx skills:*)",
+      "Bash(curl:*)",
+      "Bash(pip3 install:*)",
+      "Bash(fonttools instancer:*)"
+    ]
+  }
+}
