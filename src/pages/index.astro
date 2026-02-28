@@ -1,15 +1,59 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogCard from "@/components/BlogCard.astro";
 import { getCollection } from "astro:content";
-import { SITE } from "@/lib/constants";
+import { SITE, SOCIAL_LINKS } from "@/lib/constants";
+import lucaPhoto from "@/assets/luca-baroncini.jpg";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 5);
+
+const github = SOCIAL_LINKS.find((l) => l.icon === "github")!;
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description}>
+  <section class="fade-in-observed flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-10">
+    <Image
+      src={lucaPhoto}
+      alt="Luca Baroncini"
+      width={160}
+      height={160}
+      data-full-src={lucaPhoto.src}
+      class="lightbox-target aspect-square shrink-0 cursor-zoom-in rounded-full object-cover object-top"
+    />
+    <div>
+      <h1
+        class="font-display text-2xl font-black tracking-tight sm:text-3xl"
+        style="font-variation-settings: 'opsz' 36, 'WONK' 1;"
+      >
+        Luca Baroncini
+      </h1>
+      <p class="mt-2 text-text-secondary">
+        Tecnologia, sviluppo web, politica e arrampicata.
+      </p>
+      <div class="mt-4 flex gap-4">
+        <a
+          href="/about"
+          class="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+        >
+          Chi sono &rarr;
+        </a>
+        <a
+          href={github.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+        >
+          GitHub &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="my-12 border-border" />
+
   <section>
     <div class="flex items-center justify-between">
       <h2

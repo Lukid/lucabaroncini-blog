@@ -49,7 +49,7 @@
         img.style.cursor = "zoom-in";
         img.addEventListener("click", function () {
           triggerEl = img;
-          lightboxImg.src = img.src;
+          lightboxImg.src = img.dataset.fullSrc || img.src;
           lightboxImg.alt = img.alt || "";
           overlay.setAttribute("data-active", "");
           overlay.setAttribute("aria-hidden", "false");

@@ -19,7 +19,16 @@
       "Bash(npx skills:*)",
       "Bash(curl:*)",
       "Bash(pip3 install:*)",
-      "Bash(fonttools instancer:*)"
+      "Bash(fonttools instancer:*)",
+      "Bash(wc:*)",
+      "Bash(head:*)",
+      "Bash(grep:*)",
+      "Bash(do:*)",
+      "Bash(pip3 show:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }

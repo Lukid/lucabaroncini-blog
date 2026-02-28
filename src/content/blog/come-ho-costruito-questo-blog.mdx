@@ -10,12 +10,12 @@ import Callout from "@/components/mdx/Callout.astro";
 import blogV1 from "@/assets/blog-v1-chi-sono.png";
 
 Era un sabato pomeriggio e avevo il terminale aperto. Nessun piano preciso, nessuna deadline. 
-Noia e smania, quella smania ossessiva che da quando ho preso il via con Claude Code non riesco più a pensare ad altro..
+Noia e smania, quella smania ossessiva che da quando ho preso il via con Claude Code non riesco più a pensare ad altro.
 
 Se state in fissa con il vibe coding, che ora si chiama "Agentic engineering", mi capite bene, 
-stai ore in fissa a pensare a cosa potresti fare di davvero incredibile..
+state ore in fissa a pensare a cosa potreste fare di davvero incredibile.
 
-Ho aperto claude code, ho messo il plan mode, ho scritto un prompt e ho premuto enter. 
+Ho aperto Claude Code, ho attivato il plan mode, ho scritto un prompt e ho premuto enter.
 
 
 ## L'idea
@@ -48,7 +48,7 @@ Componenti Astro, layout, pagine, stili globali, feed RSS, dark mode, configuraz
 
 Le righe scorrono, i file appaiono uno dopo l'altro, e tu stai lì a osservare qualcosa che normalmente ti avrebbe portato via un'eternità. 
 
-Alla fine ho messo su una repo su Github. Un collegamento su Cloudflare Pages. Il sito era online.
+Alla fine ho messo su una repo su GitHub. Un collegamento su Cloudflare Pages. Il sito era online.
 
 ## Non mi somiglia
 
@@ -57,12 +57,11 @@ Ma quando l'ho aperto nel browser e l'ho guardato, niente: **non mi somigliava**
 
 <Image src={blogV1} alt="La prima versione del blog — pagina Chi sono, design generico e scarno" />
 
-Era un blog generico. Pulito, certo. Professionale, forse. Ma Era veramente scarno. Zero personalità, non aveva voce visiva. 
+Era un blog generico. Pulito, certo. Professionale, forse. Ma era veramente scarno. Zero personalità, non aveva voce visiva. 
 Mancava qualcosa di fondamentale, forse perché ero partito un po' a caso, generico e senza contesto.
 
-Qui l'idea, dettata da una pigrizia inaffondabile.S
-ono andato sulla versione di Claudio che non fa codice, ho chiesto: 
-"per quello che mi conosci, volessi farmi un blog, che stile dovrei usare a livello di frontend design ?"
+Qui l'idea, dettata da una pigrizia inaffondabile. Sono andato sulla versione di Claudio che non fa codice e ho chiesto:
+"per quello che mi conosci, volessi farmi un blog, che stile dovrei usare a livello di frontend design?"
 
 Ora, io e Claudio passiamo diverso tempo insieme, ma non finisce mai di sorprendermi.
 Eccola (taglio, ma il succo è questo):
@@ -72,7 +71,6 @@ Eccola (taglio, ma il succo è questo):
 > Direi editoriale/magazine con un tocco di strano — pensalo come se Il Manifesto si fosse innamorato di Wired Italia degli anni '90 e avessero fatto un figlio nel 2024.
 >
 > Pensa al tuo blog come a un taccuino di un artigiano curioso — qualcuno che lavora con strumenti moderni ma che ha ancora rispetto per la carta, per la narrativa, per le idee fatte bene. Non vuoi sembrare una startup, non vuoi sembrare un accademico, non vuoi sembrare un influencer tech. Vuoi sembrare te. *Editorial caldo con nervi tecnici nascosti.*
-.
 
 Bene riapro Claudio codice e gli dico:
 "Ferma ho avuto un'idea geniale: Voglio uno stile come se il Manifesto si fosse innamorato di Wired Italia negli anni 90 e avesse fatto un figlio nel 2024. 
@@ -82,13 +80,19 @@ Claudio è partito. Ha scelto [Fraunces](https://fonts.google.com/specimen/Fraun
 progettato per la lettura lunga. 
 Una palette costruita in OKLCH, una texture noise di sfondo che dà matericità allo schermo. Dropcap tipografico sul primo paragrafo.
 
-Ah, avevo installato delle skill per il frontend design, probabilmente si è mosso bene anche per quello.
+Avevo installato delle skill per il frontend design, si è mosso bene anche per quello.
+Alla fine ho fatto un ultimo passaggio con [Impeccable](https://impeccable.style/) — una suite di skill per il design quality review.
+In pratica gli dici "critica quello che vedi", "rendilo più bold", "fai un polish finale" e lui fa un audit del frontend e sistema quello che non torna:
+spaziature, coerenza cromatica, responsive, micro-dettagli che a occhio nudo ti sfuggono.
+Un po' come passare il correttore di bozze, ma per il CSS.
 
 <Callout type="info">
-Claude Code ha un comando `/find-skills` che ti permette di cercare e installare skill di terze parti. 
-Prima del redesign ne ho installata una specializzata in frontend design — in pratica istruzioni e pattern che Claudio segue quando deve prendere decisioni visive. 
-Il risultato si vede: font variabili con `font-variation-settings`, palette in OKLCH, texture SVG, dropcap tipografico, dark mode con identità cromatica propria. 
-Senza quella skill probabilmente sarebbe uscito un altro template generico.
+Claude Code ha un comando `/find-skills` che ti permette di cercare e installare skill di terze parti.
+Prima del redesign ne ho installate un paio: una specializzata in frontend design e Impeccable per il quality review.
+La prima fornisce istruzioni e pattern che Claudio segue quando deve prendere decisioni visive,
+il risultato si vede: font variabili con `font-variation-settings`, palette in OKLCH, texture SVG, dropcap tipografico, dark mode con identità cromatica propria.
+La seconda fa da revisore finale: analizza il frontend, segnala problemi di accessibilità, consistenza e responsive, e li sistema.
+Senza queste skill probabilmente sarebbe uscito un altro template generico.
 </Callout>
 
 
@@ -97,7 +101,7 @@ Senza quella skill probabilmente sarebbe uscito un altro template generico.
 Non voglio fare il dibattito filosofico sull'intelligenza artificiale. Ce ne sono già abbastanza. 
 Voglio solo raccontare un caso d'uso, in questa epoca dove tutti stanno in cerca di casi d'uso.
 
-**Cosa ha funzionato:** la velocità , la consistenza del codice prodotto, l'eliminazione di tutto il boilerplate che normalmente ti rallenta. 
+**Cosa ha funzionato:** la velocità, la consistenza del codice prodotto, l'eliminazione di tutto il boilerplate che normalmente ti rallenta. 
 Non ho dovuto cercare su Stack Overflow come configurare il feed RSS in Astro 5 o come far funzionare il dark mode con Tailwind v4. 
 
 
@@ -107,9 +111,9 @@ Questo invece era un esperimento e sono partito senza pensare molto.
 Il risultato è comunque notevole.
 
 
-## ok ma come funziona ?
+## Ok ma come funziona?
 
-Funziona che io scrivo file mdx (tipo markdown) pusho in repo e fa una build che cloudflare pages pubblica.
+Funziona che io scrivo file MDX (tipo markdown), pusho in repo e fa una build che Cloudflare Pages pubblica.
 Il sito è statico, non c'è database, non c'è backend, non c'è niente.
 
 Astro genera HTML puro al momento della build — nel browser non arriva un singolo kilobyte di JavaScript (a parte gli snippet per il dark mode toggle e il copy button).
