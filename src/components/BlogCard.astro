@@ -25,7 +25,7 @@ const isoShort = formatISOShort(pubDate);
     >
       {isoShort}
     </time>
-    <span class="truncate">
+    <span class="blog-title truncate transition-colors">
       <span class="text-accent">→ </span>{title}
     </span>
     {
@@ -54,12 +54,17 @@ const isoShort = formatISOShort(pubDate);
     }
   }
   .blog-row {
+    margin-inline: 0;
     padding-inline: 0;
-    transition: background-color 0.15s, padding 0.15s;
+    transition: background-color 0.15s, margin 0.15s, padding 0.15s;
   }
   .blog-row:hover {
     background-color: color-mix(in oklch, var(--color-accent) 8%, transparent);
+    margin-inline: -8px;
     padding-inline: 8px;
+  }
+  .blog-row:hover .blog-title {
+    color: var(--color-accent);
   }
   @media (hover: none) {
     .blog-row-grid {

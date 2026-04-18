@@ -36,14 +36,14 @@ const linkedin = SOCIAL_LINKS.find((l) => l.icon === "linkedin")!;
           Scrivo appunti, storie e opinioni. Niente tracking, niente cookie.
         </p>
         <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
-          <a href="/about" class="text-accent transition-colors hover:text-accent-hover">
+          <a href="/about" class="border-b border-accent text-accent transition-colors hover:text-accent-hover hover:border-accent-hover">
             → chi sono
           </a>
           <a
             href={github.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-accent transition-colors hover:text-accent-hover"
+            class="border-b border-accent text-accent transition-colors hover:text-accent-hover hover:border-accent-hover"
           >
             → github
           </a>
@@ -51,11 +51,11 @@ const linkedin = SOCIAL_LINKS.find((l) => l.icon === "linkedin")!;
             href={linkedin.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-accent transition-colors hover:text-accent-hover"
+            class="border-b border-accent text-accent transition-colors hover:text-accent-hover hover:border-accent-hover"
           >
             → linkedin
           </a>
-          <a href="/rss.xml" class="text-accent transition-colors hover:text-accent-hover">
+          <a href="/rss.xml" class="border-b border-accent text-accent transition-colors hover:text-accent-hover hover:border-accent-hover">
             → rss
           </a>
         </div>
@@ -65,7 +65,7 @@ const linkedin = SOCIAL_LINKS.find((l) => l.icon === "linkedin")!;
 
   <section class="mt-16">
     <div
-      class="flex items-center justify-between border-b border-dashed border-notebook-rule pb-2 font-mono"
+      class="flex items-center justify-between border-b border-dashed border-text pb-2 font-mono"
       style="letter-spacing: 0.15em;"
     >
       <h2 class="text-[13px] uppercase">
