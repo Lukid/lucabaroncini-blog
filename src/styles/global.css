@@ -51,8 +51,10 @@
   --color-accent: oklch(0.42 0.12 155);
   --color-accent-hover: oklch(0.36 0.12 155);
 
-  /* Notebook grid line (light) */
-  --color-notebook-rule: oklch(0.85 0.01 85);
+  /* Regole tratteggiate nel contenuto (visibili ma discrete) */
+  --color-notebook-rule: oklch(0.85 0.012 85);
+  /* Griglia di sfondo stile taccuino (molto sottile, solo suggerita) */
+  --color-paper-grid: oklch(0.93 0.006 85);
 }
 
 /* === Dark mode overrides === */
@@ -66,7 +68,8 @@
   --color-accent: oklch(0.65 0.14 155);
   --color-accent-hover: oklch(0.72 0.14 155);
 
-  --color-notebook-rule: oklch(0.35 0.02 55);
+  --color-notebook-rule: oklch(0.32 0.02 55);
+  --color-paper-grid: oklch(0.22 0.015 55);
 }
 
 /* === Base === */
@@ -83,11 +86,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Notebook grid background */
+  /* Notebook grid background — finer cells, very subtle lines */
   background-image:
-    linear-gradient(to right, var(--color-notebook-rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-notebook-rule) 1px, transparent 1px);
-  background-size: 28px 28px;
+    linear-gradient(to right, var(--color-paper-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-paper-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
   background-position: -1px -1px;
 }
 
