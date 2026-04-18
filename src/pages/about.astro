@@ -1,32 +1,45 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import lucaPhoto from "@/assets/luca-baroncini.jpg";
+import NotebookCard from "@/components/NotebookCard.astro";
 ---
 
-<BaseLayout title="Chi sono" description="Informazioni su Luca Baroncini: sviluppatore, appassionato di politica e arrampicatore.">
-  <div class="fade-in-observed">
-    <h1
-      class="font-display text-3xl font-black tracking-tight sm:text-4xl"
-      style="font-variation-settings: 'opsz' 48, 'WONK' 1;"
-    >
-      Chi sono
+<BaseLayout
+  title="Chi sono"
+  description="Informazioni su Luca Baroncini: sviluppatore, appassionato di politica e arrampicatore."
+>
+  <NotebookCard label="about.md" class="fade-in-observed mt-2">
+    <h1 class="font-mono text-[22px] font-semibold leading-tight sm:text-[24px]">
+      <span class="text-accent"># </span>Chi sono
     </h1>
 
-    <div class="prose mt-6">
+    <div class="mt-6 space-y-4 font-mono text-[14px] leading-[1.75] text-text">
       <p>
-        Sono Luca Baroncini. Mi occupo di AI, Sviluppo web, seguo la politica
+        Sono Luca Baroncini. Mi occupo di AI, sviluppo web, seguo la politica
         e nel tempo libero mi trovi in falesia ad arrampicare.
       </p>
       <p>
-        Questo blog è il mio spazio per condividere pensieri, appunti tecnici e storie. 
-        Niente tracking, niente cookie, niente complessità inutile.
+        Questo blog è il mio spazio per condividere pensieri, appunti tecnici
+        e storie. Niente tracking, niente cookie, niente complessità inutile.
       </p>
       <p>
-        Il sito è costruito con <a href="https://astro.build">Astro</a>,
-        <a href="https://tailwindcss.com">Tailwind CSS</a> e deployato su
-        <a href="https://pages.cloudflare.com">Cloudflare Pages</a>.
+        Il sito è costruito con
+        <a
+          href="https://astro.build"
+          class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover"
+          >Astro</a
+        >,
+        <a
+          href="https://tailwindcss.com"
+          class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover"
+          >Tailwind CSS</a
+        >
+        e deployato su
+        <a
+          href="https://pages.cloudflare.com"
+          class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover"
+          >Cloudflare Pages</a
+        >.
       </p>
     </div>
-  </div>
+  </NotebookCard>
 </BaseLayout>

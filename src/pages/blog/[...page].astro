@@ -14,26 +14,66 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const { page } = Astro.props;
+
+// Tag presenti nei post (tutti, non solo quelli della pagina corrente)
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const tagSet = new Set<string>();
+for (const p of allPosts) p.data.tags.forEach((t) => tagSet.add(t));
+const availableTags = Array.from(tagSet).sort();
+
+const totalCount = allPosts.length;
 ---
 
 <BaseLayout title="Blog" description="Tutti gli articoli del blog di Luca Baroncini.">
-  <h1
-    class="font-display text-3xl font-black tracking-tight sm:text-4xl"
-    style="font-variation-settings: 'opsz' 48, 'WONK' 1;"
-  >
-    Blog
-  </h1>
+  <header class="font-mono">
+    <h1 class="text-[20px] font-semibold">
+      <span class="text-accent">~$ ls </span>posts/
+    </h1>
+    <p class="mt-2 text-[12px] text-text-secondary">
+      # {totalCount} file, ordinati per data decrescente
+    </p>
+  </header>
 
-  <div class="stagger-children mt-8 space-y-0">
+  <div
+    class="mt-8 border-y border-dashed border-notebook-rule py-3"
+    data-filter-bar
+  >
+    <div class="flex flex-wrap items-center gap-2 font-mono">
+      <span
+        class="mr-2 text-[11px] uppercase text-text-secondary"
+        style="letter-spacing: 0.1em;"
+      >
+        filter
+      </span>
+      <button
+        type="button"
+        data-filter="all"
+        class="filter-chip filter-chip--active"
+      >
+        all
+      </button>
+      {
+        availableTags.map((tag) => (
+          <button type="button" data-filter={tag} class="filter-chip">
+            <span class="text-accent">#</span>
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="stagger-children mt-2" data-post-list>
     {
       page.data.map((post: any) => (
-        <BlogCard
-          title={post.data.title}
-          description={post.data.description}
-          pubDate={post.data.pubDate}
-          tags={post.data.tags}
-          slug={post.id}
-        />
+        <div data-tags={post.data.tags.join(",")}>
+          <BlogCard
+            title={post.data.title}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            slug={post.id}
+          />
+        </div>
       ))
     }
   </div>
@@ -45,3 +85,57 @@ const { page } = Astro.props;
     lastPage={page.lastPage}
   />
 </BaseLayout>
+
+<style>
+  .filter-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .filter-chip:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+  }
+  .filter-chip--active {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+  .filter-chip--active :global(.text-accent) {
+    color: var(--color-bg);
+  }
+</style>
+
+<script>
+  function setupFilters() {
+    const bar = document.querySelector<HTMLElement>("[data-filter-bar]");
+    const list = document.querySelector<HTMLElement>("[data-post-list]");
+    if (!bar || !list) return;
+
+    const chips = bar.querySelectorAll<HTMLButtonElement>(".filter-chip");
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const filter = chip.dataset.filter;
+        chips.forEach((c) => c.classList.remove("filter-chip--active"));
+        chip.classList.add("filter-chip--active");
+
+        const items = list.querySelectorAll<HTMLElement>("[data-tags]");
+        items.forEach((item) => {
+          if (!filter || filter === "all") {
+            item.style.display = "";
+            return;
+          }
+          const tags = (item.dataset.tags || "").split(",");
+          item.style.display = tags.includes(filter) ? "" : "none";
+        });
+      });
+    });
+  }
+  setupFilters();
+  document.addEventListener("astro:after-swap", setupFilters);
+</script>

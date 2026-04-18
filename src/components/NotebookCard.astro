@@ -1,0 +1,24 @@
+---
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label, class: className = "" } = Astro.props;
+---
+
+<div class:list={["relative border border-text bg-surface", className]}>
+  {
+    label && (
+      <span
+        class="absolute -top-[10px] left-5 bg-bg px-2 font-mono text-[10px] uppercase text-accent"
+        style="letter-spacing: 0.25em;"
+      >
+        {label}
+      </span>
+    )
+  }
+  <div class="p-6 sm:p-8">
+    <slot />
+  </div>
+</div>

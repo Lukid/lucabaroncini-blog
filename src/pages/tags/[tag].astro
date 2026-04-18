@@ -22,19 +22,20 @@ const { posts } = Astro.props;
 ---
 
 <BaseLayout title={`Tag: ${tag}`} description={`Tutti gli articoli con tag "${tag}".`}>
-  <h1
-    class="font-display text-3xl font-black tracking-tight sm:text-4xl"
-    style="font-variation-settings: 'opsz' 48, 'WONK' 1;"
-  >
-    Tag: <span class="text-accent">{tag}</span>
-  </h1>
+  <header class="font-mono">
+    <h1 class="text-[20px] font-semibold">
+      <span class="text-accent"># </span>tags/{tag}
+    </h1>
+    <p class="mt-2 text-[12px] text-text-secondary">
+      # {posts.length} {posts.length === 1 ? "file" : "file"} con questo tag
+    </p>
+  </header>
 
-  <div class="stagger-children mt-8 space-y-0">
+  <div class="stagger-children mt-8 border-t border-dashed border-notebook-rule">
     {
       posts.map((post: any) => (
         <BlogCard
           title={post.data.title}
-          description={post.data.description}
           pubDate={post.data.pubDate}
           tags={post.data.tags}
           slug={post.id}
@@ -44,13 +45,15 @@ const { posts } = Astro.props;
   </div>
 
   {posts.length === 0 && (
-    <p class="mt-8 text-text-secondary">Nessun articolo con questo tag.</p>
+    <p class="mt-8 font-mono text-sm text-text-secondary">
+      // nessun articolo con questo tag
+    </p>
   )}
 
   <a
     href="/blog"
-    class="mt-8 inline-block text-xs font-medium uppercase tracking-widest text-accent transition-colors hover:text-accent-hover"
+    class="mt-8 inline-block font-mono text-[12px] text-accent transition-colors hover:text-accent-hover"
   >
-    &larr; Tutti gli articoli
+    ← posts/
   </a>
 </BaseLayout>
