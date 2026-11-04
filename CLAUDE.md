@@ -2,8 +2,8 @@
 
 ## Stack
 - Astro 5 + MDX + Tailwind CSS v4 + TypeScript
-- Deploy: Cloudflare Pages
-- Analytics: Cloudflare Web Analytics (no cookies)
+- Deploy: Cloudflare Workers (static assets), dominio lucabaroncini.tech; ogni branch ha un preview environment
+- Analytics: Cloudflare Web Analytics, automatic setup sul dominio (no cookies, niente beacon nel codice)
 
 ## Convenzioni
 
@@ -29,12 +29,12 @@
 
 ### Componenti
 - Zero JS framework client-side (no React, no Vue)
-- Script client-side solo per dark mode toggle e copy button
+- Script client-side solo vanilla e minimi: dark mode toggle, copy button, filtri delle pagine `/osservatorio`
 - Componenti MDX: Callout, YouTube, ImageGallery
 
 ### Post
 - Frontmatter: title, description, pubDate, tags[], draft
-- Tags permessi: tech, politics, climbing, javascript, typescript, astro, web, opinion, tutorial, personal
+- Tags permessi: ai, agenti, tech, politics, climbing, javascript, typescript, astro, web, opinion, tutorial, personal
 - Immagini in `src/assets/`, non in `public/`
 
 ### Comandi

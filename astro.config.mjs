@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://lucabaroncini.pages.dev",
+  site: "https://lucabaroncini.tech",
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

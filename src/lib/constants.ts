@@ -1,17 +1,19 @@
 export const SITE = {
   title: "Luca Baroncini",
   description:
-    "Blog personale di Luca Baroncini su tecnologia, politica e arrampicata.",
-  url: "https://lucabaroncini.pages.dev",
+    "Luca Baroncini, Chief AI Officer: agenti, RAG e AI applicata al lavoro vero. Cosa funziona, cosa no e con quali prove.",
+  url: "https://lucabaroncini.tech",
   locale: "it-IT",
   lang: "it",
   author: "Luca Baroncini",
+  jobTitle: "Chief AI Officer",
   postsPerPage: 10,
 } as const;
 
 export const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
+  { label: "Osservatorio", href: "/osservatorio" },
   { label: "Chi sono", href: "/about" },
 ] as const;
 
@@ -29,6 +31,8 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 export const TAGS = [
+  "ai",
+  "agenti",
   "tech",
   "politics",
   "climbing",

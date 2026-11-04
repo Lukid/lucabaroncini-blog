@@ -1,6 +1,15 @@
 ---
 import "@/styles/global.css";
-import { SITE } from "@/lib/constants";
+import { SITE, SOCIAL_LINKS } from "@/lib/constants";
+
+const person = {
+  "@type": "Person",
+  name: SITE.author,
+  jobTitle: SITE.jobTitle,
+  worksFor: { "@type": "Organization", name: "Net7", url: "https://www.netseven.it" },
+  url: SITE.url,
+  sameAs: SOCIAL_LINKS.map((l) => l.href),
+};
 
 interface Props {
   title: string;
@@ -83,10 +92,7 @@ const ogImage = new URL(image, Astro.site);
         description: SITE.description,
         url: SITE.url,
         inLanguage: SITE.lang,
-        author: {
-          "@type": "Person",
-          name: SITE.author,
-        },
+        author: person,
       })}
     />
   ) : (
@@ -100,14 +106,8 @@ const ogImage = new URL(image, Astro.site);
         image: ogImage.toString(),
         datePublished: pubDate?.toISOString(),
         dateModified: updatedDate?.toISOString() ?? pubDate?.toISOString(),
-        author: {
-          "@type": "Person",
-          name: SITE.author,
-        },
-        publisher: {
-          "@type": "Person",
-          name: SITE.author,
-        },
+        author: person,
+        publisher: person,
         mainEntityOfPage: {
           "@type": "WebPage",
           "@id": canonicalURL.toString(),
@@ -118,5 +118,3 @@ const ogImage = new URL(image, Astro.site);
   )
 }
 
-<!-- Cloudflare Web Analytics (uncomment after enabling in dashboard) -->
-<!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN"}'></script> -->
