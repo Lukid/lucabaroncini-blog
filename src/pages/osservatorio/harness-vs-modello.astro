@@ -2,8 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import NotebookCard from "@/components/NotebookCard.astro";
 
-// Dati: solo punteggi in scala 0-100 (pass rate o score), così l'asse è uno solo.
-// Ogni riga: valore peggiore e migliore fra le configurazioni confrontate dalla fonte.
+// Dati: solo punteggi in scala 0-100 (percentuale di task riusciti o punteggio), così l'asse è uno solo.
+// Ogni riga: risultato peggiore e migliore fra le configurazioni provate dalla fonte.
 type Lever = "harness" | "modello";
 interface Row {
   lever: Lever;
@@ -11,35 +11,35 @@ interface Row {
   fixed: string;
   from: number;
   to: number;
-  bench: string;
+  task: string;
   caveat: string;
+  source: string;
   url: string;
   asOf: string;
 }
 
 const rows: Row[] = [
-  { lever: "harness", label: "omp, formato di edit", fixed: "Grok Code Fast", from: 6.7, to: 68.3, bench: "pass rate di edit, cambia solo il formato della patch (hashline)", caveat: "Misura dell'autore del progetto, non replicata. Lo stesso harness su un altro modello va peggio del suo predecessore (vedi CodeAF).", url: "https://github.com/can1357/oh-my-pi", asOf: "2026-08" },
-  { lever: "harness", label: "CodeAF, 10 harness", fixed: "DeepSeek V4 Flash", from: 2.7, to: 54.9, bench: "DeepSWE, 113 task", caveat: "Un solo seed, misura del vendor. Il vantaggio sul secondo classificato non è statisticamente risolto.", url: "https://github.com/Agent-Field/CodeAF", asOf: "2026-10" },
-  { lever: "harness", label: "MemoryTax, modello debole", fixed: "GPT-4o-mini", from: 28, to: 63, bench: "task di memoria, tre harness", caveat: "Una run per cella. Gli harness peggiori spesso non aprono il file giusto.", url: "https://arxiv.org/abs/2610.29823", asOf: "2026-10" },
-  { lever: "harness", label: "Harmony, harness evoluto", fixed: "modello fisso", from: 46.7, to: 76.7, bench: "SecRepoBench, funzionalità e sicurezza", caveat: "Split piccoli: 30 task.", url: "https://arxiv.org/abs/2610.15150", asOf: "2026-10" },
-  { lever: "harness", label: "State of AI, tool e feedback", fixed: "GLM-5.1", from: 52.5, to: 65.5, bench: "SWE-bench Verified, 100 task", caveat: "Dato riportato in un report di sintesi, non un paper dedicato.", url: "https://www.stateof.ai/2026-explore/", asOf: "2026-10" },
-  { lever: "harness", label: "RSIAgent, harness a tre ruoli", fixed: "Kimi-K3", from: 58.3, to: 72.0, bench: "OSWorld 2.0", caveat: "Il confronto con i sistemi pubblicati non usa protocollo né budget allineati.", url: "https://aetherlabsai.github.io/RSIAgent/", asOf: "2026-09" },
-  { lever: "harness", label: "Harness², harness riscritto", fixed: "GLM-5", from: 64.2, to: 75.7, bench: "WorkBuddy-Bench", caveat: "L'editor dell'harness è un modello più forte dell'esecutore; 10-100 milioni di token per task; due benchmark su tre giudicati da LLM.", url: "https://arxiv.org/abs/2610.14224", asOf: "2026-10" },
-  { lever: "harness", label: "MemoryTax, modello forte", fixed: "Opus 5.5", from: 97, to: 99, bench: "task di memoria, tre harness", caveat: "Una run per cella. Qualità quasi uguale, costo da 7 a 28 dollari.", url: "https://arxiv.org/abs/2610.29823", asOf: "2026-10" },
-  { lever: "harness", label: "HarnessTax, tre harness", fixed: "Fable 5", from: 96.7, to: 97.8, bench: "SWE-bench Lite + Terminal-Bench, 60 task", caveat: "Su 14 differenze di successo una sola regge la correzione di Holm; le differenze di costo ne reggono 9.", url: "https://harnesstax.github.io/", asOf: "2026-10" },
-  { lever: "modello", label: "Scroll, contesto lungo", fixed: "stesso harness, 6 modelli", from: 22.7, to: 86.7, bench: "LOCA_256K", caveat: "I fallimenti non sono di protocollo ma di sintesi di programma su più passi.", url: "https://arxiv.org/abs/2608.21690", asOf: "2026-08" },
-  { lever: "modello", label: "Fan et al., quattro modelli", fixed: "stessa configurazione", from: 25.2, to: 65.8, bench: "SWE-Bench, 128k di contesto", caveat: "Solo modelli aperti.", url: "https://arxiv.org/abs/2609.20804", asOf: "2026-10" },
-  { lever: "modello", label: "CodeAF, cambio di modello", fixed: "harness CodeAF", from: 54.9, to: 77.9, bench: "DeepSWE, 113 task", caveat: "Un solo seed, misura del vendor. Stessa fonte della forbice da 52 punti a modello fisso.", url: "https://github.com/Agent-Field/CodeAF", asOf: "2026-10" },
-  { lever: "modello", label: "Scroll, memoria conversazionale", fixed: "stesso harness, 6 modelli", from: 88.8, to: 94.8, bench: "LongMemEval_S", caveat: "Stesso apparato della riga LOCA_256K: il task facile appiattisce le differenze.", url: "https://arxiv.org/abs/2608.21690", asOf: "2026-08" },
+  { lever: "harness", label: "Cambio solo il modo in cui l'agente modifica i file", fixed: "stesso modello: Grok Code Fast", from: 6.7, to: 68.3, task: "modifiche al codice andate a buon fine", caveat: "l'ha misurato l'autore dello strumento e nessuno l'ha ancora rifatto. Su un altro modello lo stesso trucco rende meno.", source: "oh-my-pi", url: "https://github.com/can1357/oh-my-pi", asOf: "agosto 2026" },
+  { lever: "harness", label: "Provo dieci agenti di coding diversi", fixed: "stesso modello open: DeepSeek V4 Flash", from: 2.7, to: 54.9, task: "113 task di programmazione risolti", caveat: "una prova sola, fatta da chi vende uno dei dieci agenti.", source: "CodeAF", url: "https://github.com/Agent-Field/CodeAF", asOf: "ottobre 2026" },
+  { lever: "harness", label: "Cambio il sistema di memoria, con un modello piccolo", fixed: "stesso modello: GPT-4o-mini", from: 28, to: 63, task: "risposte giuste a domande che richiedono di ricordare cose dette prima", caveat: "una prova per combinazione. I sistemi peggiori spesso falliscono perché non aprono nemmeno il file giusto.", source: "MemoryTax", url: "https://arxiv.org/abs/2610.29823", asOf: "ottobre 2026" },
+  { lever: "harness", label: "Lascio che l'agente migliori da solo il proprio harness", fixed: "stesso modello", from: 46.7, to: 76.7, task: "codice che funziona ed è sicuro", caveat: "solo 30 task, un campione piccolo.", source: "Harmony", url: "https://arxiv.org/abs/2610.15150", asOf: "ottobre 2026" },
+  { lever: "harness", label: "Do all'agente strumenti e un ritorno sugli errori", fixed: "stesso modello: GLM-5.1", from: 52.5, to: 65.5, task: "bug reali risolti, su 100", caveat: "il numero viene da un report di sintesi, non da uno studio fatto apposta.", source: "State of AI 2026", url: "https://www.stateof.ai/2026-explore/", asOf: "ottobre 2026" },
+  { lever: "harness", label: "Divido l'agente in tre ruoli separati", fixed: "stesso modello: Kimi-K3", from: 58.3, to: 72.0, task: "lavori completati al computer, su un desktop vero", caveat: "il confronto con gli altri sistemi non usa le stesse regole né lo stesso budget.", source: "RSIAgent", url: "https://aetherlabsai.github.io/RSIAgent/", asOf: "settembre 2026" },
+  { lever: "harness", label: "Faccio riscrivere l'harness a un modello più forte", fixed: "stesso modello esecutore: GLM-5", from: 64.2, to: 75.7, task: "punteggio massimo su compiti di lavoro d'ufficio", caveat: "chi riscrive è più forte di chi esegue, e consuma fra 10 e 100 milioni di token per task. Parte dei voti li dà un altro modello.", source: "Harness²", url: "https://arxiv.org/abs/2610.14224", asOf: "ottobre 2026" },
+  { lever: "harness", label: "Cambio il sistema di memoria, con un modello forte", fixed: "stesso modello: Opus 5.5", from: 97, to: 99, task: "risposte giuste a domande che richiedono di ricordare cose dette prima", caveat: "una prova per combinazione. La qualità resta quasi uguale, il costo va da 7 a 28 dollari.", source: "MemoryTax", url: "https://arxiv.org/abs/2610.29823", asOf: "ottobre 2026" },
+  { lever: "harness", label: "Provo Claude Code, Codex e Pi", fixed: "stesso modello: Fable 5", from: 96.7, to: 97.8, task: "60 task di programmazione e da terminale risolti", caveat: "le differenze di qualità stanno quasi tutte dentro il margine d'errore. Quelle di costo no.", source: "HarnessTax", url: "https://harnesstax.github.io/", asOf: "ottobre 2026" },
+  { lever: "modello", label: "Sei modelli nello stesso harness, compito difficile", fixed: "stesso harness", from: 22.7, to: 86.7, task: "compiti risolti ragionando su documenti lunghissimi", caveat: "i modelli deboli non sbagliano il formato: non riescono a mettere insieme i passaggi.", source: "Scroll", url: "https://arxiv.org/abs/2608.21690", asOf: "agosto 2026" },
+  { lever: "modello", label: "Quattro modelli open nella stessa configurazione", fixed: "stesso harness", from: 25.2, to: 65.8, task: "bug reali risolti", caveat: "solo modelli aperti.", source: "Fan et al.", url: "https://arxiv.org/abs/2609.20804", asOf: "ottobre 2026" },
+  { lever: "modello", label: "Tengo l'harness e cambio modello", fixed: "stesso harness: CodeAF", from: 54.9, to: 77.9, task: "113 task di programmazione risolti", caveat: "è la stessa fonte della riga da 52 punti: lì cambiava l'harness, qui il modello.", source: "CodeAF", url: "https://github.com/Agent-Field/CodeAF", asOf: "ottobre 2026" },
+  { lever: "modello", label: "Sei modelli nello stesso harness, compito facile", fixed: "stesso harness", from: 88.8, to: 94.8, task: "risposte giuste su dettagli di conversazioni lunghe", caveat: "stesse condizioni della riga sui documenti lunghi. Qui il compito è facile e i modelli quasi si equivalgono.", source: "Scroll", url: "https://arxiv.org/abs/2608.21690", asOf: "agosto 2026" },
 ];
 
 const fmt = (n: number) => n.toLocaleString("it-IT", { maximumFractionDigits: 1 });
-const spread = (r: Row) => r.to - r.from;
-const leverLabel = { harness: "cambia l'harness", modello: "cambia il modello" };
+const gain = (r: Row) => r.to - r.from;
 
 const title = "Conta più l'harness o il modello?";
 const description =
-  "Tredici misure a confronto: quando cambiare l'harness sposta il risultato di un agente AI, quando conta il modello e quando l'harness decide solo quanto si paga.";
+  "Ho messo in fila tredici misure pubbliche. Con un modello al limite l'harness fa la differenza, con un compito facile decide quanto paghi, con un compito troppo difficile serve un modello migliore.";
 ---
 
 <BaseLayout title={title} description={description}>
@@ -60,7 +60,7 @@ const description =
     .row summary:hover .lbl, .row[open] .lbl { color: var(--color-accent); }
     .row summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     .filters button[aria-pressed="true"] { background: var(--color-text); color: var(--color-bg); }
-    .grid-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 4rem; gap: 0.75rem; align-items: center; }
+    .grid-row { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 1fr) 4rem; gap: 0.75rem; align-items: center; }
     @media (max-width: 640px) { .grid-row { grid-template-columns: minmax(0, 1fr) 3.5rem; } .grid-row .track { grid-column: 1 / -1; grid-row: 2; } }
   </style>
 
@@ -71,32 +71,52 @@ const description =
     <h1 class="mt-3 font-display text-[34px] leading-tight sm:text-[42px]">{title}</h1>
 
     <p class="mt-5 text-[19px] leading-relaxed">
-      Dipende da quanto il compito è difficile per il modello. Se il modello è al limite, l'harness
-      sposta il risultato anche di 50 punti. Se il compito è facile per il modello, l'harness quasi
-      non cambia la qualità e decide soprattutto quanto si paga.
+      Me lo chiedono spesso: conviene pagare il modello più forte o lavorare su come lo usiamo?
+      Per un po' ho risposto "conta come lo usi". Poi ho messo in fila le misure, e la risposta
+      giusta è un'altra: dipende da quanto il compito è difficile per quel modello.
     </p>
     <p class="mt-4 text-text-secondary">
-      L'harness è tutto quello che sta intorno al modello: istruzioni, strumenti, gestione del
-      contesto, verifiche, cicli di correzione. Qui sotto ci sono le misure che ho trovato a novembre
-      2026, con a fianco i loro limiti.
+      Quando dico harness intendo tutto quello che sta intorno al modello: le istruzioni che gli dai,
+      gli strumenti che può usare, cosa gli fai leggere, i controlli sul suo lavoro. Il modello è il
+      motore, l'harness è il resto della macchina.
     </p>
 
-    <NotebookCard label="forbice.chart" class="mt-10">
-      <h2 class="font-mono text-[13px] font-semibold uppercase" style="letter-spacing: 0.12em;">
-        Quanto si sposta il punteggio cambiando una sola leva
-      </h2>
+    <div class="mt-10 grid gap-4 sm:grid-cols-3">
+      <NotebookCard label="modello al limite">
+        <p class="font-display text-[22px] leading-snug">L'harness fa la differenza</p>
+        <p class="mt-2 text-[15px] text-text-secondary">
+          Con un modello piccolo, cambiare solo il modo in cui modifica i file lo porta dal 7% al 68% di modifiche riuscite.
+        </p>
+      </NotebookCard>
+      <NotebookCard label="compito facile">
+        <p class="font-display text-[22px] leading-snug">L'harness decide quanto paghi</p>
+        <p class="mt-2 text-[15px] text-text-secondary">
+          Con un modello di frontiera tre agenti diversi arrivano quasi allo stesso risultato. Uno costa il doppio dell'altro.
+        </p>
+      </NotebookCard>
+      <NotebookCard label="compito troppo difficile">
+        <p class="font-display text-[22px] leading-snug">Serve un modello migliore</p>
+        <p class="mt-2 text-[15px] text-text-secondary">
+          Sui documenti lunghissimi, a parità di harness, fra il modello migliore e il peggiore ci sono 64 punti.
+        </p>
+      </NotebookCard>
+    </div>
+
+    <NotebookCard label="le misure" class="mt-12">
+      <h2 class="font-display text-[24px] leading-snug">Le tredici misure</h2>
       <p class="mt-2 text-[15px] text-text-secondary">
-        Ogni riga è una fonte. Il cerchio vuoto è la configurazione peggiore, il pieno la migliore,
-        su scala 0-100. Clicca una riga per benchmark, limiti e link.
+        In ogni riga qualcuno ha tenuto ferma una cosa e cambiato l'altra. Il cerchio vuoto è il
+        risultato peggiore, quello pieno il migliore. Clicca una riga per sapere cosa si misurava, i
+        limiti della prova e la fonte.
       </p>
 
-      <div class="filters mt-5 flex flex-wrap items-center gap-2 font-mono text-[12px]" role="group" aria-label="Filtra per leva">
+      <div class="filters mt-5 flex flex-wrap items-center gap-2 font-mono text-[12px]" role="group" aria-label="Filtra le misure">
         <button type="button" data-filter="all" aria-pressed="true" class="border border-text px-2.5 py-1">tutte</button>
         <button type="button" data-filter="harness" aria-pressed="false" class="border border-text px-2.5 py-1">
-          <span class="key" style="background: var(--h);"></span> cambia l'harness, modello fisso
+          <span class="key" style="background: var(--h);"></span> stesso modello, cambio l'harness
         </button>
         <button type="button" data-filter="modello" aria-pressed="false" class="border border-text px-2.5 py-1">
-          <span class="key" style="background: var(--m);"></span> cambia il modello, harness fisso
+          <span class="key" style="background: var(--m);"></span> stesso harness, cambio il modello
         </button>
       </div>
 
@@ -107,31 +127,31 @@ const description =
             <span class="absolute -translate-x-1/2" style={`left:${t}%`}>{t}</span>
           ))}
         </div>
-        <span class="text-right max-sm:col-start-2">forbice</span>
+        <span class="text-right max-sm:col-start-2">punti</span>
       </div>
 
       <div id="rows" class="mt-1">
         {rows.map((r) => (
           <details class="row border-b border-dashed border-notebook-rule py-2" data-lever={r.lever}>
-            <summary class="grid-row font-mono text-[13px]">
+            <summary class="grid-row text-[15px]">
               <span class="lbl leading-snug">
                 {r.label}
-                <span class="block text-[11px] text-text-secondary">{r.fixed}</span>
+                <span class="block font-mono text-[11px] text-text-secondary">{r.fixed}</span>
               </span>
-              <span class="track" role="img" aria-label={`${leverLabel[r.lever]}: da ${fmt(r.from)} a ${fmt(r.to)}`}>
+              <span class="track" role="img" aria-label={`da ${fmt(r.from)} a ${fmt(r.to)}`}>
                 <span class="rule"></span>
-                <span class="span" style={`left:${r.from}%; width:${spread(r)}%`}></span>
+                <span class="span" style={`left:${r.from}%; width:${gain(r)}%`}></span>
                 <span class="dot from" style={`left:${r.from}%`}></span>
                 <span class="dot" style={`left:${r.to}%`}></span>
               </span>
-              <span class="text-right font-semibold">+{fmt(spread(r))}</span>
+              <span class="text-right font-mono font-semibold">+{fmt(gain(r))}</span>
             </summary>
             <div class="mt-3 mb-2 space-y-1 border-l-2 pl-4 text-[15px]" style="border-color: var(--c);">
-              <p><strong>{leverLabel[r.lever]}</strong>: da {fmt(r.from)} a {fmt(r.to)}. Benchmark: {r.bench}.</p>
-              <p class="text-text-secondary">Limite: {r.caveat}</p>
+              <p>Da {fmt(r.from)}% a {fmt(r.to)}% di {r.task}.</p>
+              <p class="text-text-secondary">Da prendere con le pinze: {r.caveat}</p>
               <p class="font-mono text-[12px]">
-                <a href={r.url} target="_blank" rel="noopener noreferrer" class="text-accent underline">fonte</a>
-                <span class="text-text-secondary"> · dato al {r.asOf}</span>
+                <a href={r.url} target="_blank" rel="noopener noreferrer" class="text-accent underline">{r.source}</a>
+                <span class="text-text-secondary"> · {r.asOf}</span>
               </p>
             </div>
           </details>
@@ -139,43 +159,20 @@ const description =
       </div>
     </NotebookCard>
 
-    <h2 class="mt-14 font-display text-[26px]">Il costo è dove l'harness pesa sempre</h2>
-    <p class="mt-3">
-      Con un modello forte su compiti alla sua portata, i tre harness arrivano quasi allo stesso
-      risultato. Il conto no.
-    </p>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2">
-      <NotebookCard label="harnesstax">
-        <p class="font-display text-[44px] leading-none">2×</p>
-        <p class="mt-3 text-[15px]">
-          Fable 5 risolve il 97,8% dei task in un harness e il 96,7% in un altro. Il primo costa
-          1,33 dollari a tentativo, il secondo 0,67.
-        </p>
-        <p class="mt-2 font-mono text-[12px]"><a href="https://harnesstax.github.io/" target="_blank" rel="noopener noreferrer" class="text-accent underline">fonte</a> <span class="text-text-secondary">· 60 task, al 2026-10</span></p>
-      </NotebookCard>
-      <NotebookCard label="memorytax">
-        <p class="font-display text-[44px] leading-none">4×</p>
-        <p class="mt-3 text-[15px]">
-          Opus 5.5 in tre harness: 99%, 98% e 97%. Costo totale da 6,95 a 28,41 dollari.
-        </p>
-        <p class="mt-2 font-mono text-[12px]"><a href="https://arxiv.org/abs/2610.29823" target="_blank" rel="noopener noreferrer" class="text-accent underline">fonte</a> <span class="text-text-secondary">· una run per cella, al 2026-10</span></p>
-      </NotebookCard>
-    </div>
-
-    <h2 class="mt-14 font-display text-[26px]">Come lo leggo</h2>
+    <h2 class="mt-14 font-display text-[26px]">Cosa ne ricavo</h2>
     <ul class="mt-4 list-disc space-y-3 pl-5">
-      <li>Le forbici più ampie a modello fisso arrivano tutte con modelli deboli o aperti. Con i modelli di frontiera le differenze di qualità si chiudono.</li>
-      <li>A harness fisso, il modello torna dominante sui compiti lunghi e difficili: 64 punti su LOCA_256K, 6 su un compito di memoria più facile, con lo stesso identico apparato.</li>
-      <li>Conta quale parte dell'harness. Le parti che verificano (test eseguibili, controllo delle patch) spostano il risultato. Le istruzioni in più spesso no: i file di contesto tipo AGENTS.md valgono fra -2 e +2,4 punti, con il 20% di costo in più (<a href="https://arxiv.org/abs/2602.11988" target="_blank" rel="noopener noreferrer" class="text-accent underline">fonte</a>).</li>
-      <li>Un harness ottimo per un modello non lo è per un altro. Va ritestato a ogni cambio di modello.</li>
+      <li>I guadagni enormi cambiando l'harness arrivano tutti con modelli piccoli o open. Con i modelli di frontiera la qualità si avvicina e resta la differenza di costo.</li>
+      <li>Non tutto l'harness vale uguale. I pezzi che controllano il lavoro, come far girare i test, spostano il risultato. Aggiungere istruzioni spesso no: i file tipo AGENTS.md valgono più o meno zero e fanno spendere il 20% in più (<a href="https://arxiv.org/abs/2602.11988" target="_blank" rel="noopener noreferrer" class="text-accent underline">studio</a>).</li>
+      <li>Un harness costruito su un modello non si porta dietro il guadagno quando cambi modello. A ogni cambio va rimisurato.</li>
+      <li>Per questo, prima di aggiungere pezzi, provo a toglierli. Se il risultato regge, ho appena risparmiato.</li>
     </ul>
 
-    <h2 class="mt-14 font-display text-[26px]">Limiti di questa pagina</h2>
+    <h2 class="mt-14 font-display text-[26px]">Cosa non dice questa pagina</h2>
     <ul class="mt-4 list-disc space-y-3 pl-5 text-text-secondary">
-      <li>Benchmark diversi su una scala sola: le righe si confrontano per forma, non per valore assoluto.</li>
-      <li>La forbice è fra la configurazione peggiore e la migliore di ogni fonte. Più configurazioni si provano, più la forbice tende a crescere.</li>
-      <li>Molti dati vengono da chi vende l'harness o da una sola run. Ho riportato i limiti che le fonti stesse dichiarano.</li>
-      <li>Cosa smentirebbe questa lettura: forbici a modello fisso che si chiudono anche sui modelli aperti, o harness che si trasferiscono fra modelli senza perdere.</li>
+      <li>Le prove usano test diversi. Le righe servono a vedere l'andamento, non a confrontare i numeri fra loro.</li>
+      <li>Ogni riga mette a confronto il caso peggiore e il migliore. Più configurazioni provi, più la distanza cresce.</li>
+      <li>Molti numeri vengono da chi vende lo strumento o da una prova sola. Riporto i limiti che dichiarano le fonti stesse.</li>
+      <li>Cambierei idea se i guadagni dell'harness sparissero anche sui modelli open, o se un harness desse lo stesso guadagno su modelli diversi.</li>
     </ul>
   </article>
 
