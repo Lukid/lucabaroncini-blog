@@ -1,0 +1,44 @@
+---
+title: "Harness o modello? Dipende da dove sei"
+description: "Ho messo in fila tredici misure su cosa conta di più in un agente AI. La risposta cambia se il modello è al limite o se il compito per lui è facile."
+pubDate: 2026-11-04
+tags: [ai, agenti]
+---
+
+Da un anno sento ripetere la stessa frase: "il modello ormai conta poco, il vantaggio è tutto nell'harness". Per harness intendo tutto quello che sta intorno al modello: il contesto che gli passi, i tool, i formati con cui modifica i file, i controlli, la memoria.
+
+L'ho ripetuta anch'io. Poi ho provato a mettere in fila le misure, e la frase non regge così com'è.
+
+## Cosa dicono i numeri
+
+Ho raccolto tredici confronti da paper e benchmark pubblici. In ognuno una delle due leve resta ferma e l'altra cambia. Li trovi tutti, con fonti e limiti, nell'[osservatorio](/osservatorio/harness-vs-modello).
+
+Quando il modello è al limite, l'harness fa salti enormi:
+
+- cambiando solo il formato con cui l'agente modifica il codice, lo stesso modello passa dal 6,7% al 68,3% di task risolti;
+- su una software factory per modelli open, a modello fisso, l'harness sposta il risultato dal 2,7% al 54,9%.
+
+Quando il modello è di frontiera e il compito per lui è facile, l'harness quasi non sposta la qualità. Sposta il conto:
+
+- con lo stesso modello di frontiera, due harness diversi risolvono il 96,7% e il 97,8% dei task. Uno dei due però costa il doppio a tentativo;
+- sulla memoria succede lo stesso: con un modello forte la memoria progettata pareggia il contesto completo, e costa fino a quattro volte di più.
+
+E quando il compito è davvero difficile, torna a decidere il modello. Su un benchmark di contesto lungo, a harness identico, la distanza fra il backbone migliore e il peggiore è di 64 punti (86,7 contro 22,7).
+
+C'è un dettaglio che mi ha colpito più di tutto. La fonte che porta la conferma più forte alla tesi dell'harness, nello stesso documento, cambia solo il modello e guadagna altri 23 punti. Le due leve pesano entrambe, anche lì.
+
+## Come lo leggo
+
+La domanda "conta più l'harness o il modello?" è posta male. Quella utile è: il mio modello, su questo compito, è al limite o no?
+
+- Se è al limite, l'harness è dove si guadagna. Conviene investire su contesto, formati, controlli.
+- Se il compito per lui è facile, l'harness decide quanto paghi. Conviene toglierne pezzi e misurare se il risultato regge.
+- Se il compito è troppo difficile per il modello, nessun harness lo salva. Serve un modello migliore.
+
+C'è anche una conseguenza pratica che vale per chiunque scelga strumenti. Un harness tarato su un modello non si porta dietro il guadagno quando cambi modello: lo stesso formato che fa miracoli su uno, su un altro rende meno del concorrente da cui deriva. A ogni cambio di modello la configurazione va rimisurata, non ereditata.
+
+## I limiti
+
+I tredici confronti vengono da benchmark diversi e non si sommano fra loro. Alcuni numeri sono del produttore dello strumento, e lo segnalo riga per riga. Il quadro serve a capire in che regime ti trovi, non a dare un punteggio assoluto a uno strumento.
+
+Tengo aggiornata la pagina quando arriva una misura nuova. Se ne conosci una che la smentisce, scrivimi: è quella che mi interessa di più.
