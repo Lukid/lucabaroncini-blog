@@ -19,13 +19,15 @@ reel:
     testo: "Il tuo modello, su questo compito, è al limite o no?"
 ---
 
+import MisureHarness from "@/components/mdx/MisureHarness.astro";
+
 Da un anno sento ripetere la stessa frase: "il modello ormai conta poco, il vantaggio è tutto nell'harness". Per harness intendo tutto quello che sta intorno al modello: il contesto che gli passi, i tool, i formati con cui modifica i file, i controlli, la memoria.
 
 L'ho ripetuta anch'io. Poi ho provato a mettere in fila le misure, e la frase non regge così com'è.
 
 ## Cosa dicono i numeri
 
-Ho raccolto tredici confronti da paper e benchmark pubblici. In ognuno una delle due leve resta ferma e l'altra cambia. Li trovi tutti, con fonti e limiti, nell'[osservatorio](/osservatorio/harness-vs-modello).
+Ho raccolto tredici confronti da paper e benchmark pubblici. In ognuno una delle due leve resta ferma e l'altra cambia. Li trovi tutti, con fonti e limiti, [in fondo all'articolo](#le-tredici-misure).
 
 Quando il modello è al limite, l'harness fa salti enormi:
 
@@ -50,6 +52,10 @@ La domanda "conta più l'harness o il modello?" è posta male. Quella utile è: 
 - Se il compito è troppo difficile per il modello, nessun harness lo salva. Serve un modello migliore.
 
 C'è anche una conseguenza pratica che vale per chiunque scelga strumenti. Un harness tarato su un modello non si porta dietro il guadagno quando cambi modello: lo stesso formato che fa miracoli su uno, su un altro rende meno del concorrente da cui deriva. A ogni cambio di modello la configurazione va rimisurata, non ereditata.
+
+## Le tredici misure
+
+<MisureHarness />
 
 ## I limiti
 

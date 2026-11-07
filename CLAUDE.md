@@ -29,7 +29,7 @@
 
 ### Componenti
 - Zero JS framework client-side (no React, no Vue)
-- Script client-side solo vanilla e minimi: dark mode toggle, copy button, filtri delle pagine `/osservatorio`
+- Script client-side solo vanilla e minimi: dark mode toggle, copy button, filtri delle misure dentro gli articoli
 - Componenti MDX: Callout, YouTube, ImageGallery
 
 ### Post

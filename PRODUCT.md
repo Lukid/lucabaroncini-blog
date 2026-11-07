@@ -28,7 +28,6 @@ Nessun titolo in evidenza (decisione del 2026-11-07): contano il lavoro e le ide
 
 - I contenuti nascono dal vault personale di Luca, letto in sola lettura, e sono rielaborati da un agente.
 - Ogni contenuto esce solo dopo l'approvazione di Luca.
-- L'Osservatorio (`/osservatorio`) raccoglie le misure a favore e contro le tesi seguite nel tempo.
 - Distribuzione principale: LinkedIn.
 
 ## Capabilities and Constraints
@@ -48,7 +47,7 @@ Nessun titolo in evidenza (decisione del 2026-11-07): contano il lavoro e le ide
 ## Evidence on Hand
 
 - Post pubblicato: `src/content/blog/harness-o-modello.mdx` (tredici misure su harness e modello).
-- Pagina di misure: `src/pages/osservatorio/harness-vs-modello.astro`.
+- Misure: `src/components/mdx/MisureHarness.astro`, dentro l'articolo harness-o-modello.
 - Foto: `src/assets/luca-baroncini.jpg`.
 - Vault: mappa delle idee, note di sintesi, post LinkedIn, materiali dei talk.
 - Non esistono testimonianze, clienti citabili o numeri di audience: non inventarli.

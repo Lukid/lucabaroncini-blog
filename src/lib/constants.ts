@@ -13,7 +13,6 @@ export const SITE = {
 export const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Idee", href: "/blog" },
-  { label: "Osservatorio", href: "/osservatorio" },
   { label: "Chi sono", href: "/about" },
 ] as const;
 
