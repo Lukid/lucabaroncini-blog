@@ -3,12 +3,20 @@ import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import lucaPhoto from "@/assets/luca-baroncini.jpg";
 import Campo from "@/components/Campo.astro";
+import { PERSON } from "@/lib/constants";
+
+const profile = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  mainEntity: { ...PERSON, image: new URL(lucaPhoto.src, Astro.site).toString() },
+};
 ---
 
 <BaseLayout
   title="Chi sono"
   description="Luca Baroncini porta agenti e sistemi RAG dal prototipo all'esercizio, con un occhio alle prove."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(profile)} />
   <Campo slot="campo" fondo="verde" seme="chi-sono">
     <h1 class="text-5xl leading-none font-black tracking-[-0.035em] sm:text-7xl">Chi sono</h1>
   </Campo>

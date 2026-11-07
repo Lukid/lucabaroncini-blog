@@ -1,15 +1,6 @@
 ---
 import "@/styles/global.css";
-import { SITE, SOCIAL_LINKS } from "@/lib/constants";
-
-const person = {
-  "@type": "Person",
-  name: SITE.author,
-  jobTitle: SITE.jobTitle,
-  worksFor: { "@type": "Organization", name: "Net7", url: "https://www.netseven.it" },
-  url: SITE.url,
-  sameAs: SOCIAL_LINKS.map((l) => l.href),
-};
+import { SITE, PERSON as person } from "@/lib/constants";
 
 interface Props {
   title: string;
