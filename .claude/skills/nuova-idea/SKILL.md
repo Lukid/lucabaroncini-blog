@@ -1,6 +1,6 @@
 ---
 name: nuova-idea
-description: Prepara una nuova idea per il blog di Luca (reel + articolo in bozza) a partire dalle note del suo vault Obsidian. Usala quando Luca dice "prepara un'idea su X", "nuova idea", indica una nota del vault da trasformare in contenuto, oppure dice "pubblica" su una bozza già preparata.
+description: Prepara una nuova idea per il blog di Luca (reel + articolo in bozza) a partire dalle note del suo vault Obsidian. Usala quando Luca dice "prepara un'idea su X", "nuova idea", indica una nota del vault da trasformare in contenuto, oppure dice "pubblica" su una bozza già preparata (controlli sui dati riservati, push su main dopo il suo ok, verifica del deploy).
 ---
 
 # nuova-idea
@@ -92,4 +92,16 @@ reel:
 4. Avvia `npm run dev` (in background) e controlla che la pagina si carichi senza errori di schema.
 5. Rispondi a Luca con: link al file `[nome](file:///percorso/assoluto)` (spazi come `%20`), link locale all'anteprima (`/blog/<slug>` e il feed in `/`, sulla porta stampata da `npm run dev`), fact sheet, e cosa hai escluso per il filtro.
 6. Luca corregge, tu modifichi. Nessun commit finché non dice "pubblica".
-7. Su "pubblica": metti `draft: false`, `npm run build` per verificare, commit locale in italiano (`feat: idea <titolo breve>`). Poi fermati: il push lo decide Luca.
+7. Su "pubblica" (il repo GitHub è pubblico: ogni push è per sempre):
+   1. Lavora sul `main` locale, allineato a `origin/main` (`git fetch`, `git status`). Mai pushare altri branch.
+   2. `draft: false` sulle idee indicate da Luca, poi `npm test` e `npm run build`: devono passare.
+   3. Stage solo i file del progetto, uno per uno. Mai `.claude/settings*.json`, `.frontmatter/`, `frontmatter.json`, `PRD-*.md`, `src/.obsidian/`, `.playwright-mcp/`, `.impeccable/review/`, screenshot, `.env*`, `riservato.local.md`.
+   4. Commit in italiano (`feat: idea <titolo breve>`).
+   5. Controlli, tutti a zero, senza mai stampare i termini riservati:
+      - `git log -p origin/main..HEAD` non contiene nessuna parola dell'elenco in `riservato.local.md` (confronto parola per parola, `grep -w -F -f`);
+      - nessun percorso locale (`/Users/`, nome della cartella del vault);
+      - `git diff --name-only origin/main..HEAD` non contiene nessuno dei file esclusi al punto 3.
+      Se un controllo non è a zero, fermati e dillo a Luca.
+   6. Mostra a Luca cosa esce (commit e file) e chiedi l'ok esplicito al push. Senza ok, fermati.
+   7. `git push origin main` fa partire il deploy. Aspetta che la home contenga il nuovo slug, poi controlla che le pagine `/blog/<slug>/` rispondano 200.
+   8. Rispondi con i link online delle pagine pubblicate.
