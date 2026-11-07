@@ -15,30 +15,30 @@ const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
       {prevUrl ? (
         <a
           href={prevUrl}
-          class="border border-border px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors hover:border-accent hover:text-accent"
+          class="inline-flex min-h-11 items-center border-2 border-text px-4 text-[0.8125rem] font-bold tracking-[0.12em] uppercase transition-colors hover:text-accent"
         >
-          &larr; Precedente
+          Precedente
         </a>
       ) : (
-        <span class="border border-transparent px-4 py-2 text-xs uppercase tracking-wider text-text-secondary opacity-40">
-          &larr; Precedente
+        <span class="inline-flex min-h-11 items-center px-4 text-[0.8125rem] font-bold tracking-[0.12em] uppercase text-text-secondary" aria-disabled="true">
+          Precedente
         </span>
       )}
 
-      <span class="font-display text-sm text-text-secondary" aria-current="page">
+      <span class="text-lg font-extrabold" aria-current="page">
         {currentPage} / {lastPage}
       </span>
 
       {nextUrl ? (
         <a
           href={nextUrl}
-          class="border border-border px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors hover:border-accent hover:text-accent"
+          class="inline-flex min-h-11 items-center border-2 border-text px-4 text-[0.8125rem] font-bold tracking-[0.12em] uppercase transition-colors hover:text-accent"
         >
-          Successiva &rarr;
+          Successiva
         </a>
       ) : (
-        <span class="border border-transparent px-4 py-2 text-xs uppercase tracking-wider text-text-secondary opacity-40">
-          Successiva &rarr;
+        <span class="inline-flex min-h-11 items-center px-4 text-[0.8125rem] font-bold tracking-[0.12em] uppercase text-text-secondary" aria-disabled="true">
+          Successiva
         </span>
       )}
     </nav>

@@ -1,4 +1,5 @@
 ---
+import { pubblicato, ordinaPerData } from "@/lib/posts";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogCard from "@/components/BlogCard.astro";
 import Pagination from "@/components/Pagination.astro";
@@ -7,16 +8,14 @@ import { SITE } from "@/lib/constants";
 import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+  const posts = ordinaPerData(await getCollection("blog", ({ data }) => pubblicato(data)));
   return paginate(posts, { pageSize: SITE.postsPerPage });
 }
 
 const { page } = Astro.props;
 
 // Tag presenti nei post (tutti, non solo quelli della pagina corrente)
-const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const allPosts = await getCollection("blog", ({ data }) => pubblicato(data));
 const tagSet = new Set<string>();
 for (const p of allPosts) p.data.tags.forEach((t) => tagSet.add(t));
 const availableTags = Array.from(tagSet).sort();
@@ -24,51 +23,34 @@ const availableTags = Array.from(tagSet).sort();
 const totalCount = allPosts.length;
 ---
 
-<BaseLayout title="Blog" description="Tutti gli articoli del blog di Luca Baroncini.">
-  <header class="font-mono">
-    <h1 class="text-[20px] font-semibold">
-      <span class="text-accent">~$ ls </span>posts/
-    </h1>
-    <p class="mt-2 text-[12px] text-text-secondary">
-      # {totalCount} file, ordinati per data decrescente
+<BaseLayout title="Idee" description="Tutte le idee di Luca Baroncini su AI applicata, agenti e RAG.">
+  <header>
+    <h1 class="text-5xl leading-none font-black tracking-[-0.035em] sm:text-7xl">Idee</h1>
+    <p class="mt-4 text-lg text-text-secondary">
+      {totalCount} {totalCount === 1 ? "idea" : "idee"}, dalla più recente.
     </p>
   </header>
 
-  <div
-    class="mt-8 border-y border-dashed border-text py-3"
-    data-filter-bar
-  >
-    <div class="flex flex-wrap items-center gap-2 font-mono">
-      <span
-        class="mr-2 text-[11px] uppercase text-text-secondary"
-        style="letter-spacing: 0.1em;"
-      >
-        filter
-      </span>
-      <button
-        type="button"
-        data-filter="all"
-        class="filter-chip filter-chip--active"
-      >
-        all
-      </button>
-      {
-        availableTags.map((tag) => (
-          <button type="button" data-filter={tag} class="filter-chip">
-            <span class="text-accent">#</span>
+  {
+    availableTags.length > 1 && (
+      <div class="mt-10 flex flex-wrap items-center gap-2" role="group" aria-label="Filtra per tag" data-filter-bar>
+        <button type="button" data-filter="all" aria-pressed="true" class="filter-chip">Tutti</button>
+        {availableTags.map((tag) => (
+          <button type="button" data-filter={tag} aria-pressed="false" class="filter-chip">
             {tag}
           </button>
-        ))
-      }
-    </div>
-  </div>
+        ))}
+      </div>
+    )
+  }
 
-  <div class="stagger-children mt-2" data-post-list>
+  <div class="mt-6 border-t border-border" data-post-list>
     {
       page.data.map((post: any) => (
         <div data-tags={post.data.tags.join(",")}>
           <BlogCard
             title={post.data.title}
+            description={post.data.description}
             pubDate={post.data.pubDate}
             tags={post.data.tags}
             slug={post.id}
@@ -88,25 +70,21 @@ const totalCount = allPosts.length;
 
 <style>
   .filter-chip {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 3px 10px;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-secondary);
-    background: transparent;
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border: 2px solid var(--color-text);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+    transition: color 0.15s, background-color 0.15s;
   }
   .filter-chip:hover {
-    border-color: var(--color-text);
-    color: var(--color-text);
+    color: var(--color-accent);
   }
-  .filter-chip--active {
+  .filter-chip[aria-pressed="true"] {
     background-color: var(--color-text);
-    color: var(--color-bg);
-    border-color: var(--color-text);
-  }
-  .filter-chip--active :global(.text-accent) {
     color: var(--color-bg);
   }
 </style>
@@ -121,17 +99,10 @@ const totalCount = allPosts.length;
     chips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const filter = chip.dataset.filter;
-        chips.forEach((c) => c.classList.remove("filter-chip--active"));
-        chip.classList.add("filter-chip--active");
-
-        const items = list.querySelectorAll<HTMLElement>("[data-tags]");
-        items.forEach((item) => {
-          if (!filter || filter === "all") {
-            item.style.display = "";
-            return;
-          }
+        chips.forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+        list.querySelectorAll<HTMLElement>("[data-tags]").forEach((item) => {
           const tags = (item.dataset.tags || "").split(",");
-          item.style.display = tags.includes(filter) ? "" : "none";
+          item.hidden = filter !== "all" && !tags.includes(filter ?? "");
         });
       });
     });

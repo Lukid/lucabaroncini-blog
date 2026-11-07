@@ -1,57 +1,48 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import NotebookCard from "@/components/NotebookCard.astro";
+import lucaPhoto from "@/assets/luca-baroncini.jpg";
+import Campo from "@/components/Campo.astro";
 ---
 
 <BaseLayout
   title="Chi sono"
-  description="Luca Baroncini, Chief AI Officer: porta agenti e sistemi RAG dal prototipo all'esercizio, con un occhio alle prove."
+  description="Luca Baroncini porta agenti e sistemi RAG dal prototipo all'esercizio, con un occhio alle prove."
 >
-  <NotebookCard label="about.md" class="fade-in-observed mt-2">
-    <h1 class="font-mono text-[22px] font-semibold leading-tight sm:text-[24px]">
-      <span class="text-accent"># </span>Chi sono
-    </h1>
+  <Campo slot="campo" fondo="verde" seme="chi-sono">
+    <h1 class="text-5xl leading-none font-black tracking-[-0.035em] sm:text-7xl">Chi sono</h1>
+  </Campo>
 
-    <div class="mt-6 space-y-4 font-mono text-[14px] leading-[1.75] text-text">
+  <div class="grid gap-8 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-12">
+    <Image
+      src={lucaPhoto}
+      alt="Luca Baroncini"
+      width={320}
+      height={320}
+      class="aspect-square w-32 object-cover object-top sm:w-40"
+    />
+
+    <div class="prose">
       <p>
         Sono Luca Baroncini, Chief AI Officer in
-        <a href="https://www.netseven.it" target="_blank" rel="noopener noreferrer" class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover">Net7</a>,
-        software house di Pisa. Lavoro su agenti e sistemi RAG
-        in produzione, anche per la pubblica amministrazione, e guido team che
-        sviluppano con l'AI ogni giorno.
+        <a href="https://www.netseven.it" target="_blank" rel="noopener noreferrer">Net7</a>,
+        software house di Pisa. Lavoro su agenti e sistemi RAG in produzione, anche per la
+        pubblica amministrazione, e guido team che sviluppano con l'AI ogni giorno.
       </p>
       <p>
-        Vengo dallo sviluppo web e dalla community WordPress: speaker ai
-        WordCamp, organizer di WordCamp Pisa e del Meetup di Pisa.
+        Vengo dallo sviluppo web e dalla community WordPress: speaker ai WordCamp, organizer di
+        WordCamp Pisa e del Meetup di Pisa.
       </p>
       <p>
-        Ogni settimana leggo paper, benchmark e annunci sull'AI. Qui pubblico
-        quello che resta dopo il filtro: tesi, prove a favore, prove contro.
-        L'<a href="/osservatorio" class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover">osservatorio</a>
+        Ogni settimana leggo paper, benchmark e annunci sull'AI. Qui pubblico quello che resta dopo
+        il filtro: tesi, prove a favore, prove contro. L'<a href="/osservatorio">osservatorio</a>
         raccoglie i temi che seguo nel tempo.
       </p>
       <p>
-        Nel tempo libero mi trovi in falesia ad arrampicare.
-      </p>
-      <p>
-        Il sito è costruito con
-        <a
-          href="https://astro.build"
-          class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover"
-          >Astro</a
-        >,
-        <a
-          href="https://tailwindcss.com"
-          class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover"
-          >Tailwind CSS</a
-        >
-        e deployato su
-        <a
-          href="https://workers.cloudflare.com"
-          class="text-accent underline decoration-wavy underline-offset-[3px] transition-colors hover:text-accent-hover"
-          >Cloudflare Workers</a
-        >.
+        Il sito è costruito con <a href="https://astro.build">Astro</a> e
+        <a href="https://tailwindcss.com">Tailwind CSS</a>, e gira su
+        <a href="https://workers.cloudflare.com">Cloudflare Workers</a>.
       </p>
     </div>
-  </NotebookCard>
+  </div>
 </BaseLayout>

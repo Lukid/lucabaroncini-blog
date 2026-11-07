@@ -1,0 +1,70 @@
+---
+title: "La novità deve battere una baseline curata"
+description: "Un reranker che migliora una pipeline lasciata ai default non ha ancora dimostrato niente. Su un dataset pubblico, contro la stessa pipeline tarata, il guadagno diventa una perdita."
+pubDate: 2026-11-07
+tags: [ai]
+draft: false
+reel:
+  - stazione: tesi
+    testo: "Una novità che batte i *default* non ha ancora battuto niente."
+  - stazione: passaggio
+    cifra: "0,039"
+    testo: "Su WANDS il reranker guadagna *0,039* di nDCG@10 contro la fusione lasciata ai default."
+  - stazione: evidenza
+    cifra: "-0,008"
+    testo: "Stesso reranker, stessi candidati, fusione tarata: *-0,008*."
+  - stazione: limite
+    cifra: "2"
+    testo: "Su *due dataset su cinque* il reranker vince davvero, in tutti i 200 split di verifica."
+  - stazione: domanda
+    testo: "La cosa nuova che voglio aggiungere, contro *cosa* la sto misurando?"
+---
+
+Più aggiungiamo pezzi alle pipeline RAG, più mi viene un dubbio: a volte usiamo componenti costosi per recuperare il rendimento che abbiamo lasciato nei parametri di default.
+
+Il gesto è sempre lo stesso. Si prende la pipeline com'è, si innesta il componente nuovo, si misura il delta, si dichiara vittoria. L'ho fatto anch'io. Il problema è che "la pipeline com'è" di solito gira con i valori scelti da chi ha scritto la libreria.
+
+## Il caso che mi è rimasto in testa
+
+Dylan Couzon ha pubblicato per Qdrant due articoli che conviene leggere insieme: uno su [come tarare la ricerca ibrida](https://qdrant.tech/articles/how-to-tune-hybrid-search/), l'altro su [quando vale la pena aggiungere un reranker](https://qdrant.tech/articles/when-a-reranker-is-worth-it/). Sono benchmark pubblicati dal produttore del motore, su cinque dataset pubblici.
+
+Sul dataset WANDS il reranker migliora l'nDCG@10 di 0,039 rispetto alla Reciprocal Rank Fusion lasciata ai valori di default.
+
+Bene, quindi il reranker funziona.
+
+Poi lo stesso reranker viene confrontato con la stessa fusione, sugli stessi candidati, dopo averne tarato i parametri. Risultato: -0,008.
+
+Non aveva migliorato la pipeline. Aveva battuto una baseline che nessuno aveva ottimizzato. L'articolo lo dice così: un reranker misurato contro il default può sembrare una vittoria che il tuning avrebbe dato con molto meno lavoro al momento della query.
+
+## Perché il default non è neutro
+
+Un parametro di default sembra un valore innocuo. In realtà è un'ipotesi sul dominio di qualcun altro.
+
+Nel caso della fusione, Qdrant usa di default k=2, mentre il paper originale di RRF usa 60, che nella formula di Qdrant vale k=61. Su WANDS i due valori scelgono un primo risultato diverso nel 42% delle query. Non è una regolazione fine: sono due pipeline diverse.
+
+E c'è il conto. Nelle misure pubblicate, il secondo prefetch della ricerca ibrida aggiunge circa 0,6-1,5 millisecondi. Il reranking di 100 candidati su CPU, con i tre modelli più piccoli provati, costa da mezzo secondo a cinque secondi per query. Il tuning si paga una volta. Il reranker si paga a ogni query, insieme all'infrastruttura e a un altro modello da mantenere.
+
+## Dove il reranker vince davvero
+
+Sarebbe comodo fermarsi qui, ma non sarebbe onesto.
+
+Su CodeSearchNet e DBPedia-entity il reranker batte la fusione tarata di 0,135 e 0,115, e il guadagno regge in tutti i 200 split di verifica held-out. Sugli altri tre dataset no: SciFact regge nel 37% degli split, ArguAna nel 2,5%, WANDS mai.
+
+Quindi i reranker servono, in certe condizioni. Nei casi vincenti c'era un modello con una finestra di contesto e dati di addestramento adatti al corpus. Il punto non è "niente reranker". Il punto è che senza la baseline tarata non sai in quale dei due casi ti trovi.
+
+## La regola che ne tiro fuori
+
+1. Misurare quanto margine c'è nei candidati che la pipeline già restituisce. Se li ordinassi in modo perfetto, quanto guadagnerei? Sui cinque dataset quel margine andava da 0,247 a 0,487 di nDCG@10.
+2. Tarare quello che c'è, su un evaluation set del proprio dominio.
+3. Solo dopo provare il componente nuovo, su domande diverse da quelle usate per tarare.
+
+Vale ben oltre il RAG. Se confronto una cosa nuova con una baseline lasciata ai default, non sto misurando il valore della novità. Sto misurando anche tutto il lavoro che non avevo fatto prima.
+
+## Limiti
+
+- Sono benchmark pubblicati da Qdrant su cinque dataset e una metrica (nDCG@10). Non ho trovato una replica indipendente.
+- Le misure di latenza vengono da un portatile, un processo, una richiesta alla volta. Servono come ordine di grandezza, non come tempi di produzione.
+- Tarare non è gratis: serve un set etichettato e tempo. Su SciFact, con 300 query, nessuna configurazione provata ha dato un intervallo al 95% che escludesse lo zero. Tenere il default era la risposta giusta su uno dei cinque dataset.
+- Anche la configurazione tarata perde qualcosa quando la provi su query nuove: sui 200 split ne conserva fra il 67% e il 95% del guadagno.
+
+Non so quanti componenti delle architetture che vedo in giro stiano risolvendo un problema reale e quanti stiano compensando una baseline mai ottimizzata. Mi piacerebbe saperlo.

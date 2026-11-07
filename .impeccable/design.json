@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T16:51:59.313523+00:00",
+  "title": "Design System: Luca Baroncini, Manifesti di numeri",
+  "extensions": {
+    "colorMeta": {
+      "blu": {
+        "role": "primary",
+        "displayName": "Blu notte",
+        "canonical": "oklch(0.3044 0.0866 267.72)",
+        "hex": "#1c2b5a",
+        "tonalRamp": [
+          "oklch(15% 0.0866 267.72)",
+          "oklch(26% 0.0866 267.72)",
+          "oklch(37% 0.0866 267.72)",
+          "oklch(48% 0.0866 267.72)",
+          "oklch(59% 0.0866 267.72)",
+          "oklch(70% 0.0866 267.72)",
+          "oklch(82% 0.0866 267.72)",
+          "oklch(95% 0.0866 267.72)"
+        ]
+      },
+      "ocra": {
+        "role": "primary",
+        "displayName": "Ocra",
+        "canonical": "oklch(0.7698 0.1625 74.45)",
+        "hex": "#f0a202",
+        "tonalRamp": [
+          "oklch(15% 0.1625 74.45)",
+          "oklch(26% 0.1625 74.45)",
+          "oklch(37% 0.1625 74.45)",
+          "oklch(48% 0.1625 74.45)",
+          "oklch(59% 0.1625 74.45)",
+          "oklch(70% 0.1625 74.45)",
+          "oklch(82% 0.1625 74.45)",
+          "oklch(95% 0.1625 74.45)"
+        ]
+      },
+      "rosso": {
+        "role": "secondary",
+        "displayName": "Rosso",
+        "canonical": "oklch(0.5081 0.1858 21.09)",
+        "hex": "#b81f33",
+        "tonalRamp": [
+          "oklch(15% 0.1858 21.09)",
+          "oklch(26% 0.1858 21.09)",
+          "oklch(37% 0.1858 21.09)",
+          "oklch(48% 0.1858 21.09)",
+          "oklch(59% 0.1858 21.09)",
+          "oklch(70% 0.1858 21.09)",
+          "oklch(82% 0.1858 21.09)",
+          "oklch(95% 0.1858 21.09)"
+        ]
+      },
+      "verde": {
+        "role": "secondary",
+        "displayName": "Verde",
+        "canonical": "oklch(0.6996 0.113 154.96)",
+        "hex": "#5fb37f",
+        "tonalRamp": [
+          "oklch(15% 0.113 154.96)",
+          "oklch(26% 0.113 154.96)",
+          "oklch(37% 0.113 154.96)",
+          "oklch(48% 0.113 154.96)",
+          "oklch(59% 0.113 154.96)",
+          "oklch(70% 0.113 154.96)",
+          "oklch(82% 0.113 154.96)",
+          "oklch(95% 0.113 154.96)"
+        ]
+      },
+      "carta": {
+        "role": "neutral",
+        "displayName": "Carta",
+        "canonical": "oklch(0.9588 0.0127 86.83)",
+        "hex": "#f5f1e8",
+        "tonalRamp": [
+          "oklch(15% 0.0127 86.83)",
+          "oklch(26% 0.0127 86.83)",
+          "oklch(37% 0.0127 86.83)",
+          "oklch(48% 0.0127 86.83)",
+          "oklch(59% 0.0127 86.83)",
+          "oklch(70% 0.0127 86.83)",
+          "oklch(82% 0.0127 86.83)",
+          "oklch(95% 0.0127 86.83)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "figure": {
+        "displayName": "Cifra",
+        "purpose": "Il numero dell'idea, metà schermo."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Domanda finale e nome."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Frase di ogni schermata."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Titoli interni dell'articolo."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Testo dell'articolo, 68ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Barre, navigazione, comandi."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "componi",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Cifra e forme entrano con view(); statico con riduci movimento."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "lg",
+        "value": "64rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Schermata",
+      "kind": "custom",
+      "refersTo": "schermata",
+      "description": "Campo pieno con barra, cifra, frase e comandi.",
+      "html": "<section class=\"ds-schermata\"><div class=\"ds-barra\"><span>Luca Baroncini</span><span>tesi 1 / 5</span></div><p class=\"ds-cifra\">73%</p><p class=\"ds-frase\">Il <strong>73%</strong> dei test cambia dopo una settimana.</p><div class=\"ds-barra\"><a href=\"#\">Avanti</a><a href=\"#\">Leggi tutto</a></div></section>",
+      "css": ".ds-schermata{background:var(--color-blu,#1c2b5a);color:var(--color-carta,#f5f1e8);padding:8px 20px 16px;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;max-width:360px}.ds-barra{display:flex;justify-content:space-between;font-size:0.8125rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}.ds-barra a{color:inherit;min-height:44px;display:inline-flex;align-items:center;text-underline-offset:4px}.ds-barra a:hover{text-decoration:underline}.ds-barra a:focus-visible{outline:3px solid currentColor;outline-offset:3px}.ds-cifra{color:var(--color-ocra,#f0a202);font-size:6rem;font-weight:900;line-height:1;letter-spacing:-0.04em;margin:1rem 0}.ds-frase{font-size:1.75rem;font-weight:800;line-height:1.12;letter-spacing:-0.02em;margin:0 0 1.5rem}.ds-frase strong{font-weight:900;color:var(--color-ocra,#f0a202)}"
+    },
+    {
+      "name": "Forme",
+      "kind": "custom",
+      "refersTo": "schermata",
+      "description": "Cerchio, quadrato e barra: nessun raggio, nessuna ombra.",
+      "html": "<svg class=\"ds-forme\" viewBox=\"0 0 36 10\"><circle cx=\"5\" cy=\"5\" r=\"5\" fill=\"#f0a202\"/><rect x=\"13\" width=\"10\" height=\"10\" fill=\"#b81f33\"/><rect x=\"26\" y=\"4\" width=\"10\" height=\"2\" fill=\"#5fb37f\"/></svg>",
+      "css": ".ds-forme{width:216px;background:#1c2b5a;display:block}"
+    },
+    {
+      "name": "Link articolo",
+      "kind": "nav",
+      "refersTo": "link-controllo",
+      "description": "Sottolineato 2px in colore accento.",
+      "html": "<p class=\"ds-prose\">Leggi <a href=\"#\">le fonti</a>.</p>",
+      "css": ".ds-prose{font-family:Archivo,sans-serif;font-size:1.125rem;line-height:1.6;color:var(--color-blu,#1c2b5a);background:var(--color-carta,#f5f1e8);padding:16px}.ds-prose a{color:inherit;text-decoration:underline;text-decoration-color:var(--color-rosso,#b81f33);text-decoration-thickness:2px;text-underline-offset:0.2em}.ds-prose a:hover{color:var(--color-rosso,#b81f33)}.ds-prose a:focus-visible{outline:3px solid var(--color-rosso,#b81f33);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Il manifesto di numeri",
+    "overview": "Ogni idea parte da un numero che diventa manifesto: un campo di colore pieno, una cifra gigantesca costruita da forme geometriche, una frase sotto. Sistema piatto: nessuna ombra, raggio o sfumatura.",
+    "keyCharacteristics": [
+      "Cinque colori piatti, un campo pieno per schermata.",
+      "Archivo variabile, pesi 800-900, cifre tabulari.",
+      "La cifra si compone dalle sue forme; statica con movimento ridotto.",
+      "Zero ombre, zero raggi, zero gradienti.",
+      "Il contrasto decide l'inchiostro, non il gusto."
+    ],
+    "rules": [
+      {
+        "name": "The Un-Solo-Campo Rule",
+        "body": "Ogni schermata ha un solo colore di fondo, a tutta larghezza.",
+        "section": "colors"
+      },
+      {
+        "name": "The Inchiostro Rule",
+        "body": "L'inchiostro segue il campo; la cifra e l'accento sono ocra solo dove il contrasto regge.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ancora-Misurata Rule",
+        "body": "Una forma sta su un glifo solo nei punti di ANCORE; se cambia il font vanno rimisurati.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Piatto-Sempre Rule",
+        "body": "Nessun box-shadow, text-shadow o gradiente.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do dare a ogni schermata un solo campo pieno.",
+      "Do scegliere l'inchiostro dal contrasto.",
+      "Do costruire la composizione dallo stesso seme in feed, articolo e copertina.",
+      "Do tenere un'unica famiglia, Archivo.",
+      "Do dare ai comandi almeno 44px.",
+      "Do lasciare statica la composizione con prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't usare ombre, sfumature o angoli arrotondati.",
+      "Don't usare l'ocra per testo o bordi su carta.",
+      "Don't mettere una forma su un glifo fuori da ANCORE.",
+      "Don't tornare al feed di card su bianco.",
+      "Don't aggiungere un secondo carattere di titolo."
+    ]
+  }
+}

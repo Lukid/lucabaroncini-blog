@@ -21,6 +21,7 @@ const props = Astro.props;
 <html lang={SITE.lang} class="antialiased">
   <head>
     <BaseHead {...props} />
+    <slot name="head" />
     {/* Prevent dark mode flash */}
     <script is:inline>
       (function () {
@@ -33,38 +34,14 @@ const props = Astro.props;
       })();
     </script>
   </head>
-  <body class="flex min-h-dvh flex-col font-body">
+  <body class="flex min-h-dvh flex-col">
     <Header />
-    <main class="mx-auto w-full max-w-4xl flex-1 bg-bg px-6 py-12 sm:px-8">
+    <slot name="campo" />
+    <main class="mx-auto w-full max-w-5xl flex-1 px-4 pt-10 pb-20 sm:px-8 sm:pt-16">
       <slot />
     </main>
     <Footer />
 
     <Lightbox />
-
-    {/* IntersectionObserver for scroll animations */}
-    <script is:inline>
-      (function () {
-        if (typeof IntersectionObserver === "undefined") return;
-        var io = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (e) {
-              if (e.isIntersecting) {
-                e.target.classList.add("is-visible");
-                io.unobserve(e.target);
-              }
-            });
-          },
-          { threshold: 0.1 }
-        );
-        function observe() {
-          document.querySelectorAll(".fade-in-observed, .stagger-children").forEach(function (el) {
-            if (!el.classList.contains("is-visible")) io.observe(el);
-          });
-        }
-        observe();
-        document.addEventListener("astro:after-swap", observe);
-      })();
-    </script>
   </body>
 </html>

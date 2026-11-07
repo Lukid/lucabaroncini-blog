@@ -1,6 +1,5 @@
-export function formatISOShort(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
+// "04/11/2026" negli elenchi, "4 novembre 2026" nelle pagine.
+export const formatData = (date: Date, lungo = false): string =>
+  date.toLocaleDateString("it-IT", lungo
+    ? { day: "numeric", month: "long", year: "numeric" }
+    : { day: "2-digit", month: "2-digit", year: "numeric" });

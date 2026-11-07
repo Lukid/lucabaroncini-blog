@@ -1,0 +1,92 @@
+---
+import Cifra from "./Cifra.astro";
+import { COLORI, coloreDi, contrasto, evidenzia, inchiostro, type Schermata } from "@/lib/reel";
+
+interface Props {
+  schermata: Schermata;
+  indice: number; // da 1
+  totale: number;
+  slug: string;
+  titolo: string;
+  prossima: { href: string; label: string };
+}
+
+const { schermata, indice, totale, slug, titolo, prossima } = Astro.props;
+const fondo = coloreDi(schermata, indice - 1);
+const ink = inchiostro(fondo);
+const domanda = schermata.stazione === "domanda";
+const idDi = (n: number) => (n === 1 ? slug : `${slug}-${n}`);
+// Accento in ocra solo dove regge il testo (blu, 6,4:1); altrove a colori invertiti.
+const accento =
+  contrasto(COLORI.ocra, COLORI[fondo]) >= 4.5
+    ? "color: var(--color-ocra)"
+    : `background: var(--color-${ink}); color: var(--color-${fondo}); padding: 0 0.12em; box-decoration-break: clone; -webkit-box-decoration-break: clone`;
+const barra = "flex flex-wrap items-center justify-between gap-x-4 text-[0.8125rem] font-bold tracking-[0.12em] uppercase";
+const link = "inline-flex min-h-11 items-center gap-2 underline-offset-4 hover:underline";
+---
+
+<section
+  id={idDi(indice)}
+  class="schermata @container flex flex-col overflow-x-clip break-words bg-(--fondo) px-5 pt-2 pb-4 text-(--ink) lg:px-12"
+  style={`--fondo: var(--color-${fondo}); --ink: var(--color-${ink})`}
+  aria-label={`${titolo}, ${indice} di ${totale}`}
+>
+  <div class={barra}>
+    <a href="/about" class={link}>Luca Baroncini</a>
+    <p class="flex flex-wrap gap-x-3">
+      <span>{schermata.stazione}</span>
+      <span aria-hidden="true">{indice} / {totale}</span>
+    </p>
+  </div>
+
+  {/* Griglia, non flex: dentro un flex in colonna Chrome non dà altezza al riquadro della cifra (cqh = 0). */}
+  <div class="grid flex-1 grid-rows-[minmax(0,1fr)_auto] lg:grid-cols-[3fr_2fr] lg:grid-rows-1 lg:items-center lg:gap-x-12">
+    {
+      domanda ? (
+        <>
+          {/* La domanda resta un manifesto: un grande disco ocra tagliato dal bordo del foglio, mai sotto il testo. */}
+          <div class="relative min-h-[30svh] lg:self-stretch" aria-hidden="true">
+            <svg
+              class="absolute top-1/2 right-[calc(-1.25rem-22cqi)] aspect-square h-[min(84cqi,100%)] -translate-y-1/2 fill-ocra lg:right-auto lg:left-[calc(-3rem-12cqi)] lg:h-[min(52cqi,100%)]"
+              viewBox="0 0 1 1"
+              focusable="false"
+            >
+              <circle cx="0.5" cy="0.5" r="0.5" />
+            </svg>
+          </div>
+          <p class="py-8 text-[clamp(1.75rem,11cqi,3.25rem)] leading-[1.05] font-black tracking-[-0.03em] text-balance lg:text-[clamp(2.25rem,4.5cqi,4rem)]">
+            {evidenzia(schermata.testo).map((s) => (s.accento ? <strong class="font-black" style={accento}>{s.t}</strong> : s.t))}
+          </p>
+        </>
+      ) : (
+        <>
+          <Cifra cifra={schermata.cifra} seme={`${slug}-${indice}`} fondo={fondo} class="min-h-[38svh] lg:self-stretch" />
+          <p class="mt-6 text-[clamp(1.75rem,8.5cqi,2.25rem)] leading-[1.12] font-extrabold tracking-[-0.02em] text-pretty lg:mt-0 lg:text-[clamp(2rem,3.6cqi,3rem)]">
+            {evidenzia(schermata.testo).map((s) => (s.accento ? <strong class="font-black" style={accento}>{s.t}</strong> : s.t))}
+          </p>
+        </>
+      )
+    }
+  </div>
+
+  <div class:list={[barra, "mt-6"]}>
+    {
+      domanda ? (
+        <>
+          <a href={`/blog/${slug}`} class={link}>Leggi il ragionamento completo</a>
+          <a href={prossima.href} class={link}>{prossima.label}</a>
+        </>
+      ) : (
+        <>
+          <a href={`#${idDi(indice + 1)}`} class={link}>
+            <svg viewBox="0 0 12 12" class="size-3" aria-hidden="true" focusable="false">
+              <path d="M6 1v9M2 6.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" />
+            </svg>
+            Avanti
+          </a>
+          <a href={`/blog/${slug}`} class={link}>Leggi tutto</a>
+        </>
+      )
+    }
+  </div>
+</section>

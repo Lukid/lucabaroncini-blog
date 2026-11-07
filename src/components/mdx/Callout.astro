@@ -6,28 +6,15 @@ interface Props {
 const { type = "info" } = Astro.props;
 
 const labels = {
-  info: "NOTE",
-  note: "NOTE",
-  tip: "TIP",
-  warning: "WARNING",
-  danger: "DANGER",
+  info: "Nota",
+  note: "Nota",
+  tip: "Consiglio",
+  warning: "Attenzione",
+  danger: "Pericolo",
 } as const;
-
-const label = labels[type];
 ---
 
-<aside
-  class="relative my-8 border border-text bg-surface px-[22px] py-[18px] font-mono text-[14px] leading-[1.7]"
-  role="note"
->
-  <span
-    class="absolute -top-[9px] left-5 bg-bg px-2 font-mono text-[10px] text-accent"
-    style="letter-spacing: 0.2em;"
-    aria-hidden="true"
-  >
-    [ {label} ]
-  </span>
-  <div class="[&>p]:my-0 [&>p+p]:mt-3">
-    <slot />
-  </div>
+<aside class="my-8 border-2 border-text px-5 py-4 text-base [&_p]:my-0 [&_p+p]:mt-3" role="note">
+  <strong class="mb-1 block text-[0.8125rem] font-bold tracking-[0.12em] uppercase">{labels[type]}</strong>
+  <slot />
 </aside>

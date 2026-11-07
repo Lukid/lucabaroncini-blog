@@ -1,0 +1,42 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import { SITE } from "@/lib/constants";
+
+interface Props {
+  image?: string;
+}
+---
+
+<!doctype html>
+<html lang={SITE.lang} class="feed antialiased">
+  <head>
+    <BaseHead title={SITE.title} description={SITE.description} type="website" image={Astro.props.image} />
+  </head>
+  <body>
+    <a
+      href="/blog"
+      class="sr-only bg-carta px-4 py-3 font-bold text-blu focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-10"
+    >
+      Salta all'indice delle idee
+    </a>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  html.feed { scroll-snap-type: y proximity; }
+  @media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+    html.feed { scroll-snap-type: y mandatory; }
+  }
+  .schermata { min-height: 100svh; scroll-snap-align: start; }
+
+  /* Il body di global.css è fuori layer e vince sulle utility: si ridefinisce qui. */
+  html.feed { scrollbar-color: var(--color-carta) var(--color-blu); }
+  html.feed,
+  html.feed body { background-color: var(--color-blu); color: var(--color-carta); }
+
+  /* Il rosso dell'accento sparirebbe sul campo rosso: l'anello prende l'inchiostro della schermata. */
+  html.feed :focus-visible { outline-color: currentColor; }
+</style>

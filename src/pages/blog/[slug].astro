@@ -1,11 +1,10 @@
 ---
+import { pubblicato, ordinaPerData } from "@/lib/posts";
 import BlogPost from "@/layouts/BlogPost.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+  const posts = ordinaPerData(await getCollection("blog", ({ data }) => pubblicato(data)));
 
   return posts.map((post, index) => ({
     params: { slug: post.id },
@@ -26,14 +25,17 @@ const { Content } = await render(post);
 ---
 
 <BlogPost
+  slug={post.id}
   title={post.data.title}
   description={post.data.description}
   pubDate={post.data.pubDate}
   updatedDate={post.data.updatedDate}
   heroImage={post.data.heroImage}
   tags={post.data.tags}
+  image={`/blog/${post.id}/og.png`}
   prevPost={prevPost}
   nextPost={nextPost}
+  reel={post.data.reel}
 >
   <Content />
 </BlogPost>

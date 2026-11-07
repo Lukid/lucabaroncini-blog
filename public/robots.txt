@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# llms: https://lucabaroncini.tech/llms.txt
 Sitemap: https://lucabaroncini.tech/sitemap-index.xml

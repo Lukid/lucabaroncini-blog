@@ -1,0 +1,49 @@
+---
+import Cifra from "./Cifra.astro";
+import { SITE, SOCIAL_LINKS } from "@/lib/constants";
+
+interface Props {
+  primaIdea?: string;
+}
+
+const { primaIdea } = Astro.props;
+const link = "inline-flex min-h-11 items-center underline-offset-4 hover:underline";
+const voci = [
+  { label: "Osservatorio", href: "/osservatorio" },
+  { label: "Chi sono", href: "/about" },
+  { label: "Tutte le idee", href: "/blog" },
+  ...SOCIAL_LINKS,
+  { label: "RSS", href: "/rss.xml" },
+];
+---
+
+<section
+  class="schermata @container mx-auto grid max-w-[480px] grid-rows-[auto_minmax(0,1fr)] break-words bg-carta px-5 pt-6 pb-4 text-blu lg:max-w-none lg:grid-cols-[3fr_2fr] lg:gap-x-12 lg:px-12 lg:pt-10 lg:pb-8"
+  aria-labelledby="nome"
+>
+  <h1 id="nome" class="text-[clamp(2rem,15cqi,4.5rem)] lg:text-[6rem] leading-[0.95] font-black tracking-[-0.04em]">
+    {SITE.author}
+  </h1>
+  <Cifra seme="luca-baroncini" fondo="carta" class="min-h-[38svh] lg:self-stretch" />
+  {/* A lg manifesto orizzontale: nome e forme nel campo largo, frase e navigazione nella loro colonna. */}
+  <div class="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-end">
+  <p class="mt-6 text-[clamp(1.5rem,7cqi,2rem)] leading-[1.15] font-extrabold tracking-[-0.02em] text-pretty">
+    Agenti, RAG e AI applicata al lavoro vero. Cosa funziona, cosa no e con quali prove.
+  </p>
+  <nav aria-label="Principale" class="mt-6">
+    <ul class="flex flex-wrap gap-x-5 text-[0.8125rem] font-bold tracking-[0.12em] uppercase">
+      {voci.map((v) => <li><a href={v.href} class={link}>{v.label}</a></li>)}
+    </ul>
+  </nav>
+  {
+    primaIdea && (
+      <a href={`#${primaIdea}`} class:list={[link, "mt-2 gap-2 text-[0.8125rem] font-bold tracking-[0.12em] uppercase"]}>
+        <svg viewBox="0 0 12 12" class="size-3" aria-hidden="true" focusable="false">
+          <path d="M6 1v9M2 6.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+        Avanti
+      </a>
+    )
+  }
+  </div>
+</section>

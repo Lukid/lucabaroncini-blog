@@ -1,12 +1,11 @@
+import { pubblicato, ordinaPerData } from "@/lib/posts";
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { SITE } from "@/lib/constants";
 import type { APIContext } from "astro";
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+  const posts = ordinaPerData(await getCollection("blog", ({ data }) => pubblicato(data)));
 
   return rss({
     title: SITE.title,

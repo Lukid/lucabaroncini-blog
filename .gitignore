@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+.superpowers/
+.impeccable/mocks/
+
+# dati riservati della skill nuova-idea
+.claude/skills/nuova-idea/riservato.local.md

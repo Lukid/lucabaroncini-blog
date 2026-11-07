@@ -1,0 +1,27 @@
+---
+import Cifra from "./feed/Cifra.astro";
+import { inchiostro, type Colore } from "@/lib/reel";
+
+interface Props {
+  fondo: Colore;
+  seme: string;
+  cifra?: string;
+}
+
+// Fascia di colore pieno a tutta larghezza, con la cifra dell'idea o solo le forme. Il testo sta nello slot.
+const { fondo, seme, cifra } = Astro.props;
+---
+
+<div class="campo" style={`background: var(--color-${fondo}); color: var(--color-${inchiostro(fondo)})`}>
+  <div class="mx-auto grid max-w-5xl gap-8 px-4 py-10 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:gap-12">
+    <div class="self-end"><slot /></div>
+    <Cifra cifra={cifra} seme={seme} fondo={fondo} class="h-[28svh] min-h-44 max-lg:order-first lg:h-80 lg:self-center" />
+  </div>
+</div>
+
+<style>
+  /* L'accento del tema (rosso o ocra) sparirebbe sulla fascia: l'anello di fuoco prende l'inchiostro. */
+  .campo :global(:focus-visible) {
+    outline-color: currentColor;
+  }
+</style>

@@ -1,0 +1,136 @@
+---
+import { ANCORE, COLORI, ancorePer, contrasto, formePer, inchiostro, type Colore } from "@/lib/reel";
+
+interface Props {
+  cifra?: string;
+  seme: string;
+  fondo: Colore;
+  class?: string;
+}
+
+const { cifra, seme, fondo, class: dimensioni = "min-h-[38svh] flex-1" } = Astro.props;
+const ink = inchiostro(fondo);
+// Ocra come nella bozza; dove l'ocra non stacca dal fondo (ocra, verde, carta) la cifra prende l'inchiostro.
+const coloreCifra: Colore = contrasto(COLORI.ocra, COLORI[fondo]) >= 3 ? "ocra" : ink;
+// Una forma del colore del fondo sarebbe invisibile.
+const forme = formePer(seme, Boolean(cifra)).map((f) => ({ ...f, colore: f.colore === fondo ? ink : f.colore }));
+const glifi = [...(cifra ?? "")];
+// La cifra si costruisce dalle sue forme: fino a due glifi prendono una forma ancorata alla loro geometria,
+// di un colore diverso sia dal fondo sia dalla cifra. I dischi negli occhielli possono staccare (carta compresa);
+// barre e quadrati stanno dentro un tratto e prendono un colore vicino di valore alla cifra, mai la carta.
+const ancorati = ancorePer(cifra ?? "");
+const diversi = (cs: Colore[]) => cs.filter((c) => c !== fondo && c !== coloreCifra);
+const coloriDisco = diversi(["rosso", "carta", "verde", "ocra", "blu"]);
+const coloreTratto = diversi(["rosso", "verde", "blu", "ocra"])[0];
+---
+
+<div class:list={["cifra relative [container-type:size]", dimensioni]} style={`--n: ${Math.max(2, glifi.length)}`} aria-hidden="true">
+  {
+    cifra && (
+      <p
+        class="numero absolute top-1/2 left-0 -translate-y-1/2 leading-none font-black tracking-[-0.04em] whitespace-nowrap"
+        style={`color: var(--color-${coloreCifra}); font-size: var(--h)`}
+      >
+        {glifi.map((c, i) => {
+          const k = ancorati.indexOf(i);
+          const a = ANCORE[c];
+          if (k < 0) return c;
+          // Un centesimo di em oltre la misura copre l'antialias del bordo del glifo.
+          const style = `left: ${a.x - 0.01}em; top: ${a.y - 0.01}em; width: ${a.w + 0.02}em; height: ${a.h + 0.02}em; fill: var(--color-${a.tipo === "cerchio" ? coloriDisco[k] : coloreTratto}); --da: ${a.tipo === "cerchio" ? "0 -0.6em" : "-0.6em 0"}`;
+          return (
+            <span class="relative inline-block">
+              {c}
+              <svg class="ancora absolute" viewBox="0 0 1 1" preserveAspectRatio="none" style={style} focusable="false">
+                {a.tipo === "cerchio" ? <circle cx="0.5" cy="0.5" r="0.5" /> : <rect width="1" height="1" />}
+              </svg>
+            </span>
+          );
+        })}
+      </p>
+    )
+  }
+  {
+    forme.map((f, i) => {
+      // Ogni forma è un suo SVG. Le misure seguono il riquadro (cqi = larghezza, cqh = altezza):
+      // la forma resta sempre dentro, così nessun taglio cade a pochi pixel dal testo.
+      const barra = f.tipo === "barra";
+      // Con la cifra le forme libere stanno nelle fasce sopra e sotto il suo corpo e si rimpiccioliscono
+      // se la fascia è stretta; senza cifra prendono tutto il riquadro.
+      // Una barra è larga 2 × s: senza tetto a 50cqi una forma grande uscirebbe dal riquadro, sopra il testo.
+      const s = cifra ? `min(${f.d}cqi, ${barra ? 5 : 1} * var(--banda))` : `min(${f.d}cqi, ${barra ? 50 : 100}cqi, 100cqh)`;
+      const w = barra ? "2 * var(--s)" : "var(--s)";
+      const alt = barra ? "var(--s) / 5" : "var(--s)";
+      let posto = `top: calc((100cqh - ${alt}) * ${f.y / 100})`;
+      if (cifra) {
+        const sopra = f.y < 50;
+        const k = sopra ? 1 - f.y / 50 : (f.y - 50) / 50;
+        posto = `${sopra ? "bottom" : "top"}: calc(50cqh + var(--h) / 2 + 0.5rem + ${k} * (var(--banda) - ${alt}))`;
+      }
+      const style = `--s: ${s}; left: calc((100cqi - ${w}) * ${f.x / 100}); ${posto}; width: calc(${w}); fill: var(--color-${f.colore}); --dx: ${i % 2 ? 40 : -40}px; --dy: ${i % 3 ? -30 : 30}px`;
+      return (
+        <svg class="forma absolute" viewBox={barra ? "0 0 10 1" : "0 0 1 1"} style={style} focusable="false">
+          {f.tipo === "cerchio" ? <circle cx="0.5" cy="0.5" r="0.5" /> : <rect width={barra ? 10 : 1} height="1" />}
+        </svg>
+      );
+    })
+  }
+</div>
+
+<style>
+  /* --h: corpo della cifra; --banda: spazio libero sopra e sotto il corpo. Unità del riquadro .cifra. */
+  .cifra {
+    --h: min(calc(150cqi / var(--n)), 40svh, 80cqh);
+    --banda: max(0px, 50cqh - var(--h) / 2 - 0.5rem);
+  }
+  @media (min-width: 64rem) {
+    .cifra {
+      --h: min(calc(150cqi / var(--n)), 80cqh);
+    }
+  }
+
+  /* Entrando, la cifra sale dal basso e le forme ancorate scivolano al loro posto. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .forma,
+      .numero,
+      .ancora {
+        animation: componi cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 90%;
+      }
+      .numero {
+        animation-name: rivela;
+        animation-range: entry 0% entry 60%;
+      }
+      .ancora {
+        animation-name: posa;
+        animation-range: entry 30% entry 100%;
+      }
+    }
+  }
+
+  @keyframes componi {
+    from {
+      transform: translate(var(--dx), var(--dy)) scale(0.3);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes rivela {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
+  @keyframes posa {
+    from {
+      translate: var(--da);
+    }
+    to {
+      translate: none;
+    }
+  }
+</style>

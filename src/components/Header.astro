@@ -8,76 +8,67 @@ function isActive(href: string) {
   if (href === "/") return currentPath === "/";
   return currentPath === href || currentPath.startsWith(href + "/");
 }
+
+// Il nome porta già alla home.
+const items = NAV_ITEMS.filter((item) => item.href !== "/");
 ---
 
-<header class="border-b border-text bg-bg">
-  <nav class="mx-auto flex max-w-4xl items-center justify-between px-6 py-4 font-mono sm:px-8">
-    <a href="/" class="text-sm font-medium">
-      <span class="text-accent">~$ </span>luca.baroncini
+<header class="border-b border-border">
+  <nav
+    aria-label="Principale"
+    class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 text-[0.8125rem] font-bold uppercase tracking-[0.12em] sm:px-8"
+  >
+    <a href="/" class="py-2 font-extrabold" aria-current={currentPath === "/" ? "page" : undefined}>
+      {SITE.author}
     </a>
 
-    {/* Desktop nav */}
-    <div class="hidden items-center gap-2 sm:flex">
+    {/* Desktop */}
+    <div class="hidden items-center gap-6 sm:flex">
       {
-        NAV_ITEMS.map((item) => {
-          const active = isActive(item.href);
-          return (
-            <a
-              href={item.href}
-              class:list={[
-                "border px-2.5 py-1 text-xs transition-colors",
-                active
-                  ? "border-text bg-text text-bg"
-                  : "border-transparent hover:border-text",
-              ]}
-            >
-              {item.href}
-            </a>
-          );
-        })
+        items.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class="border-b-[3px] border-transparent py-1.5 transition-colors hover:text-accent aria-[current=page]:border-accent"
+          >
+            {item.label}
+          </a>
+        ))
       }
       <ThemeToggle />
     </div>
 
-    {/* Mobile toggle */}
-    <div class="flex items-center gap-2 sm:hidden">
+    {/* Mobile */}
+    <div class="flex items-center gap-1 sm:hidden">
       <ThemeToggle />
       <button
         id="mobile-menu-toggle"
         type="button"
-        aria-label="Apri menu"
+        aria-controls="mobile-menu"
         aria-expanded="false"
-        class="border border-text px-2 py-1 text-xs transition-colors hover:bg-text hover:text-bg"
+        class="min-h-11 px-2 font-bold uppercase tracking-[0.12em]"
       >
-        <span aria-hidden="true">[ menu ]</span>
+        Menu
       </button>
     </div>
   </nav>
 
-  {/* Mobile menu */}
-  <div id="mobile-menu" class="hidden border-t border-text sm:hidden">
-    <div class="mx-auto max-w-4xl px-6 py-3 font-mono sm:px-8">
+  <div id="mobile-menu" class="hidden border-t border-border sm:hidden">
+    <ul class="mx-auto max-w-5xl px-4 py-2">
       {
-        NAV_ITEMS.map((item) => {
-          const active = isActive(item.href);
-          return (
+        items.map((item) => (
+          <li>
             <a
               href={item.href}
-              class:list={[
-                "block border px-3 py-2 text-xs transition-colors",
-                "mb-1 last:mb-0",
-                active
-                  ? "border-text bg-text text-bg"
-                  : "border-transparent hover:border-text",
-              ]}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              class="block py-3 text-2xl font-extrabold tracking-[-0.01em] aria-[current=page]:text-accent aria-[current=page]:underline aria-[current=page]:decoration-[3px] aria-[current=page]:underline-offset-8"
             >
-              <span class="text-accent">→ </span>
-              {item.href}
+              {item.label}
             </a>
-          );
-        })
+          </li>
+        ))
       }
-    </div>
+    </ul>
   </div>
 </header>
 
@@ -88,12 +79,14 @@ function isActive(href: string) {
 
     function closeMenu() {
       toggle?.setAttribute("aria-expanded", "false");
+      if (toggle) toggle.textContent = "Menu";
       menu?.classList.add("hidden");
     }
 
     toggle?.addEventListener("click", () => {
       const expanded = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", String(!expanded));
+      toggle.textContent = expanded ? "Menu" : "Chiudi";
       menu?.classList.toggle("hidden");
     });
 

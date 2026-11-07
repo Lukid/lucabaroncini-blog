@@ -1,0 +1,84 @@
+---
+title: "La review l'abbiamo già data agli agenti. Il giudizio no"
+description: "Scrivere codice è diventato economico, e verificarlo lo sta diventando. Quello che resta all'umano è decidere cosa fare, con quali criteri, e se ha senso farlo."
+pubDate: 2026-11-07
+tags: [ai, agenti]
+draft: false
+reel:
+  - stazione: tesi
+    testo: "La review l'abbiamo già data agli *agenti*. Il giudizio no."
+  - stazione: evidenza
+    cifra: "29.000"
+    testo: "Anthropic: *29.000* vulnerabilità candidate in sei mesi, circa 6.000 riviste a mano. I nuovi report partono senza revisione."
+  - stazione: passaggio
+    cifra: "0"
+    testo: "Il team di Claude Code fa entrare le modifiche a basso rischio degli autori fidati con *zero* approvazioni umane."
+  - stazione: limite
+    testo: "Nessuna fonte misura il *giudizio*. Questa parte viene dal mio lavoro."
+  - stazione: domanda
+    testo: "Cosa sto *decidendo* io, e cosa lascio decidere agli agenti?"
+---
+
+La frase la sentite ovunque: con gli agenti scriviamo dieci volte più codice, quindi il nuovo collo di bottiglia è la review. L'ho pensato anch'io. Poi guardo come lavoro, e la review in buona parte l'ho già data agli agenti.
+
+Succede quasi da sé. Ogni volta che automatizzi un pezzo del processo, il passo più lento che resta diventa il collo di bottiglia. Di solito quel passo è una persona. Allora cerchi di toglierla da lì: un agente che rilegge, uno che lancia i test, uno che controlla la sicurezza. E il collo di bottiglia si sposta ancora.
+
+La domanda che mi interessa è dove si ferma.
+
+## La review si sta già automatizzando
+
+Non ho trovato uno studio che misuri la cosa in modo pulito su molti team. Ho trovato segnali da direzioni diverse che puntano dalla stessa parte.
+
+Il primo viene dalla sicurezza. Anthropic [racconta](https://www.anthropic.com/research/launching-opt-in-vuln-finding-service-for-open-source) di aver trovato in sei mesi oltre 29.000 vulnerabilità candidate in progetti open source, e di essere riuscita a rivederne a mano circa 6.000. Il limite, scrivono, è la capacità umana di validare. La risposta non è stata assumere più revisori: il servizio nuovo manda ai maintainer report generati solo dal modello, e quasi 5.000 sono già partiti verso chi li aveva chiesti. La verifica umana resta soprattutto per i progetti che non hanno risorse per farla da soli.
+
+Il secondo viene dai token. Un paper della Concordia University, [Tokenomics](https://arxiv.org/abs/2601.14470), ha misurato dove finiscono i token in una pipeline multi-agente (ChatDev con un modello di ragionamento GPT-5, 30 task). La fase di code review ne consuma in media il 59,4%, la scrittura iniziale del codice l'8,6%. A fare review lì sono altri agenti. La review c'è ancora, e costa più della scrittura, ma non la fa una persona.
+
+Il terzo è il più esplicito. Il team di Claude Code ha descritto [come fa review](https://claude.dev/blog/solving-code-review-at-anthropic/), e non risponde "più persone a leggere". La review diventa una pila di controlli scalata sul rischio: verifica prima della PR, review AI con più agenti che votano i finding, security review che blocca il merge, approvazione umana a seconda del rischio, rollback veloce. Per le modifiche a basso rischio (documentazione, testi, funzioni interne dietro flag) le approvazioni umane richieste sono zero, una volta che i controlli automatici sono verdi, e solo per gli autori nella lista dei fidati del repo. A decidere il livello di rischio è un classificatore che legge la modifica.
+
+I numeri che riportano: da giugno a settembre le PR mergiate sono più che raddoppiate, e la quota di PR revertite è scesa di oltre il 40%. C'è anche un dettaglio che mi è rimasto: una PR ha fatto più di cinquanta giri di review e fix in una notte, e circa sei segnalazioni su dieci riguardavano codice presente fin dal primo passaggio. Più giri non comprano più qualità.
+
+È lo stesso schema che vedo nel mio lavoro. L'umano era il collo di bottiglia della review, e lo si toglie dai punti dove non serve.
+
+## Cosa resta all'umano
+
+Quello che non riesco a togliere, e che non vedo togliere neanche nei casi più spinti, non è la lettura del codice. È un'altra cosa:
+
+- decidere cosa fare e in che ordine;
+- dire se una cosa ha senso, cioè se risolve il problema giusto;
+- stabilire cosa vuol dire "va bene": criteri, rischi accettabili, cosa non deve succedere mai;
+- rispondere quando qualcosa si rompe.
+
+Anche nel caso di Claude Code queste decisioni restano a persone. Qualcuno ha deciso cosa conta come basso rischio, chi entra nella lista dei fidati, quanto deve essere veloce il rollback. Gli stessi autori tengono due paletti: l'approvazione di un agente non vale mai come quella di una persona, e ammettono di non avere ancora meccanismi che stringono l'approvazione quando revert e incidenti salgono. Cioè la parte che decide quando fidarsi non è automatizzata.
+
+Quindi il collo di bottiglia si sposta due volte: dalla scrittura alla verifica, poi dalla verifica al giudizio.
+
+## Il rischio cambia faccia
+
+Se la review umana era un filtro contro il codice sbagliato, il giudizio è un filtro contro la direzione sbagliata. E il secondo errore è più difficile da vedere.
+
+Un sistema di agenti che scrive e verifica contro criteri che nessuno ha fissato con cura produce in fretta cose corrette che non servono. Tutti i controlli sono verdi, perché verificano quello che è stato chiesto, non se valeva la pena chiederlo.
+
+I segnali di questo rischio ci sono già. Gergely Orosz, nel [Pragmatic Engineer](https://blog.pragmaticengineer.com/the-pulse-new-trend-concern-about-massive-increase-in-code-review-load/), raccoglie la testimonianza di chi, se la review AI non ha commenti, approva e basta. In quel caso l'umano non decide più: firma. Dries Buytaert la mette sul piano della responsabilità: il codice che non capisci diventa un problema di qualcun altro ([Never submit code you don't understand](https://dri.es/never-submit-code-you-do-not-understand)). Vale anche per le decisioni: una scelta che non hai fatto davvero tu resta comunque tua quando qualcosa va storto.
+
+## Come lo leggo
+
+La tesi "il collo di bottiglia è la review" mi sembra già superata dai fatti. La review si automatizza, a strati, in base al rischio.
+
+Quello che conta è dove metto il mio tempo:
+
+- meno a leggere diff, più a scrivere bene cosa voglio e perché;
+- meno ad approvare, più a fissare i criteri con cui gli agenti approvano;
+- meno a controllare ogni modifica, più a guardare se il risultato serve a qualcosa.
+
+Il punto non è rallentare gli agenti. È non delegare per sbaglio anche il giudizio.
+
+## Limiti
+
+- I numeri di Anthropic, sia sulla review di Claude Code sia sullo scanner, sono dichiarati da Anthropic su sistemi suoi. Non sono verificabili dall'esterno.
+- Il dato sui token viene da una sola configurazione: un framework, un modello, 30 task.
+- Il Pragmatic Engineer raccoglie testimonianze, non una misura su un campione.
+- Nessuna di queste fonti misura il tasso di difetti che arriva in produzione con e senza review umana.
+- Il caso Claude Code è un team che possiede modello, harness e strumento di review, con rollback in minuti. Non è detto che si trasferisca a un team qualunque.
+- La parte sul giudizio viene dalla mia esperienza di lavoro, non da una misura. Non ho trovato fonti che confrontino il costo della direzione sbagliata con quello del codice sbagliato.
+
+Me lo chiedo ogni volta che lancio un agente: cosa sto decidendo io, e cosa sto lasciando decidere a lui senza accorgermene?
