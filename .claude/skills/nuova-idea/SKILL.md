@@ -21,16 +21,14 @@ Leggi `.claude/skills/nuova-idea/riservato.local.md` (file locale, ignorato da g
 
 ## 1. Fonti, in quest'ordine (sola lettura)
 
-1. `04 - WIKI/Atlante delle idee.md`
-2. Le note pertinenti in `05 - GALAXY`
-3. I testi di Luca in `03 - RESOURCES` (post LinkedIn, talk, piano editoriale)
+Le tre fonti, con i loro percorsi nel vault, sono elencate in ordine in `riservato.local.md`: la mappa delle idee, le note di sintesi pertinenti, i testi di Luca (post LinkedIn, talk, piano editoriale).
 
 Se Luca indica una nota, parti da quella. Prima di scrivere applica il filtro qui sotto.
 
 ## 2. Filtro di riservatezza (vincolante)
 
 - Documenti interni e di clienti elencati in `riservato.local.md`: mai usarli. Dalle schede che citano quei casi esce la tesi generalizzata, mai il caso, i numeri o le scelte di progetto. I nomi dei progetti PA sono pubblici, decisioni e dettagli tecnici no.
-- Le note Galaxy sono formulazioni del vault, spesso sintesi di fonti altrui: si usano come spunto, la voce pubblicata è quella di Luca e le fonti esterne si citano.
+- Le note di sintesi sono formulazioni del vault, spesso sintesi di fonti altrui: si usano come spunto, la voce pubblicata è quella di Luca e le fonti esterne si citano.
 - Nessun nome di prodotto come raccomandazione dove la funzione basta (regola globale di Luca per i documenti cliente; qui vale come buona pratica, non vincolo).
 - Accenti italiani veri sempre.
 

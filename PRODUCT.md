@@ -43,14 +43,14 @@ Nessun titolo in evidenza (decisione del 2026-11-07): contano il lavoro e le ide
 - Lingua italiana, accenti veri sempre; termini tecnici inglesi quando sono quelli del lavoro (harness, reranker, evaluation set).
 - Voce: colloquiale ma precisa, paragrafi brevi, dubbi e limiti dichiarati, domande finali vere e non da engagement.
 - Niente emoji, formule da marketing, "game changer", "ecco 5 lezioni", entusiasmo obbligatorio.
-- Fonti: `03 - RESOURCES/Piano editoriale LinkedIn - Luca Baroncini.md` e `Bio e headline - Luca Baroncini.md` nel vault.
+- Fonti: il piano editoriale e la bio di Luca, nel vault (percorsi in `.claude/skills/nuova-idea/riservato.local.md`).
 
 ## Evidence on Hand
 
 - Post pubblicato: `src/content/blog/harness-o-modello.mdx` (tredici misure su harness e modello).
 - Pagina di misure: `src/pages/osservatorio/harness-vs-modello.astro`.
 - Foto: `src/assets/luca-baroncini.jpg`.
-- Vault: Atlante delle idee, note Galaxy, due post LinkedIn, canovaccio Meetup Pisa, presentazione Codemotion Rome 2026.
+- Vault: mappa delle idee, note di sintesi, post LinkedIn, materiali dei talk.
 - Non esistono testimonianze, clienti citabili o numeri di audience: non inventarli.
 
 ## Product Principles

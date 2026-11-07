@@ -25,7 +25,7 @@ Ogni idea ha due forme scritte nello stesso file:
 
 Formato scelto da Luca: opzione C della bozza, "reel + articolo".
 
-Struttura dei passaggi presa dall'Atlante delle idee del vault: tesi, passaggi, evidenza, limite, domanda.
+Struttura dei passaggi presa dalla mappa delle idee del vault: tesi, passaggi, evidenza, limite, domanda.
 
 ### 2. Il feed
 
@@ -91,7 +91,7 @@ Riferimenti dalla ricerca online: Pintori per Olivetti, segnaletica di Noorda, f
 Skill di progetto in `.claude/skills/` (nome proposto: `nuova-idea`). Flusso:
 
 1. Luca dice "prepara un'idea su X" (o indica una nota del vault).
-2. La skill legge il vault in sola lettura, parte da `04 - WIKI/Atlante delle idee.md`, dalle note `05 - GALAXY` pertinenti e dai testi di Luca in `03 - RESOURCES` (post LinkedIn, talk).
+2. La skill legge il vault in sola lettura, parte dalla mappa delle idee, dalle note di sintesi pertinenti e dai testi di Luca (post LinkedIn, talk). I percorsi stanno in `riservato.local.md`.
 3. Applica il filtro di riservatezza (sotto) e scrive nel repo una bozza con reel e articolo, `draft: true`.
 4. Avvia l'anteprima solo in locale (`npm run dev`, con le bozze visibili solo in sviluppo) e dà a Luca il link. Le bozze non vanno mai su branch remoti né su anteprime Cloudflare (decisione di Luca, 2026-11-07).
 5. Luca corregge. Su "pubblica": `draft: false`, commit, push su `main`.
@@ -104,7 +104,7 @@ Indicazioni dall'agente del vault, da riportare nella skill:
 
 - Mai i documenti interni Net7 né i casi di clienti PA: l'elenco puntuale sta in un file locale della skill, ignorato da git (`riservato.local.md`). Mai i file non tracciati nella radice del vault.
 - Dalle schede che citano quei casi esce la tesi generalizzata, mai il caso, i numeri o le scelte di progetto. I nomi dei progetti PA sono pubblici, decisioni e dettagli tecnici no.
-- Le note Galaxy sono formulazioni del vault, spesso sintesi di fonti altrui: si usano come spunto, la voce pubblicata è quella di Luca e le fonti esterne si citano.
+- Le note di sintesi sono formulazioni del vault, spesso sintesi di fonti altrui: si usano come spunto, la voce pubblicata è quella di Luca e le fonti esterne si citano.
 - Nessun nome di prodotto come raccomandazione dove la funzione basta (regola globale di Luca per i documenti cliente; qui vale come buona pratica, non vincolo).
 - Accenti italiani veri sempre.
 
