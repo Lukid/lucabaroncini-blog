@@ -54,5 +54,5 @@ export const PERSON = {
   homeLocation: { "@type": "Place", name: "Pisa, Italia" },
   knowsAbout: ["Intelligenza artificiale", "Agenti AI", "RAG", "WordPress", "Sviluppo web"],
   url: SITE.url,
-  sameAs: SOCIAL_LINKS.map((l) => l.href),
+  sameAs: [...SOCIAL_LINKS.map((l) => l.href), "https://www.wikidata.org/wiki/Q142083969"],
 };
